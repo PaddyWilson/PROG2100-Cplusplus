@@ -84,10 +84,14 @@ class gameBoard
 				{
 					return 0;
 				}
-				//i++;
+				else
+				{
+					count++;
+				}
 			}
 		}
-		if (count == 8)
+		//cout << count << endl;
+		if (count == 9)
 		{
 			return 2;
 		}
@@ -267,6 +271,11 @@ int main()
 					cout << player << " Wins" << endl;
 					break;
 				}
+				else if (game.checkWin("") == 2)	
+				{
+					cout << "Its a Tie" << endl;
+					break;
+				}
 
 				comp.AIpick(game.board, computer);
 				cout << "Computer" << endl;
@@ -291,6 +300,11 @@ int main()
 					cout << computer << " Wins" << endl;
 					break;
 				}
+				else if (game.checkWin("") == 2)	
+				{
+					cout << "Its a Tie" << endl;
+					break;
+				}
 
 				pickLocation(game.board);
 				cout << "Player" << endl;
@@ -302,13 +316,7 @@ int main()
 					break;
 				}
 			}
-
-			if (game.checkWin(player) == 2)	
-			{
-				cout << "Its a Tie" << endl;
-				break;
-			}
-		}
+		}//end while
 
 	} while (playAgain());//end do while. Sees if the user want to play again
 
