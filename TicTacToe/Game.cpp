@@ -37,6 +37,7 @@ class gameBoard
 		}
 	}
 
+	//checks for wins or ties
 	int checkWin(string x_o)
 	{
 		//check rows
@@ -99,7 +100,8 @@ class gameBoard
 		return 0;
 	}
 
-	bool move(int i, string x_o)
+	//gets the move and places a X or O there
+	void move(int i, string x_o)
 	{
 		int r, c;
 		switch (i)
@@ -143,7 +145,6 @@ class gameBoard
 			default:
 				break;
 		}
-
 		board[r][c] = x_o;
 	}
 
@@ -175,14 +176,135 @@ class computerAI
 	//ai picks locaton
 	int AIpick(string p[][3], string x_o)
 	{
+		string player;
+		/*
+			1|2|3
+		   -------
+			4|5|6
+		   -------
+			7|8|9
+		*/
+		
+		if (x_o == "X")
+		{
+			player = "O";
+		}
+		else
+		{
+			player = "X";
+		}
+
+		//checks to see if its the first play of the game 
+		int i = 0;
+		int count = 0;
+		for (int r = 0; r < 3; r++)
+		{
+			for (int c = 0; c < 3; c++)
+			{
+				i++;
+				if (p[r][c] == to_string(i))
+				{
+					count++;
+				}
+			}
+		}
+		if (count == 9)
+		{
+			return 1;
+		}
+
+		//rest of game
+		//checks to see if it can win
+		int x = move(p, x_o, player);
+		//cout << x << " comp win" << endl;
+		if (x != 0)
+		{
+			return x;
+		}
+
+		//checks for blocks
+		x = move(p, player, x_o);
+		//cout << x << " comp block" << endl;
+		if (x!=0)
+		{
+			return x;
+		}
+
+		//if it cant win or block
+
+
+		//for (int i = 0; i < 3; i++)
+		//{
+		//	if (p[i][0] == computer && p[i][1] == computer)//1, 2
+		//	{
+		//		return 3 + (i * 3);
+		//	}
+		//	else if (p[i][0] == computer && p[i][2] == computer)//1, 3
+		//	{
+		//		return 2 + (i * 3);
+		//	}
+		//	else if (p[i][1] == computer && p[i][2] == computer)//1, 3
+		//	{
+		//		return 1 + (i * 3);
+		//	}
+		//}
+		////col
+		//for (int i = 0; i < 3; i++)
+		//{
+		//	if (p[0][i] == computer && p[1][i] == computer)
+		//	{
+		//		return 7 + i;
+		//	}
+		//	else if (p[0][i] == computer && p[2][i] == computer)//1, 3
+		//	{
+		//		return 4 + i;
+		//	}
+		//	else if (p[i][i] == computer && p[i][i] == computer)//1, 3
+		//	{
+		//		return 1 + i;
+		//	}
+		//}
+		////diagnal
+		//if (p[0][0] == computer && p[1][1] == computer)
+		//{
+		//	return 9;
+		//}
+		//else if (p[0][0] == computer && p[2][2] == computer)
+		//{
+		//	return 5;
+		//}
+		//else if (p[1][1] == computer && p[2][2] == computer)
+		//{
+		//	return 1;
+		//}
+		//else if (p[0][3] == computer && p[1][1] == computer)
+		//{
+		//	return 7;
+		//}
+		//else if (p[0][3] == computer && p[2][0] == computer)
+		//{
+		//	return 5;
+		//}
+		//else if (p[1][1] == computer && p[2][0] == computer)
+		//{
+		//	return 3;
+		//}
+
+		//blocks
+
+
+
+		//randomly select a spot and validate its not taken
+		//if it is taken it tries again
+
 		srand(static_cast<unsigned int>(time(NULL)));
-		int i;
+		int randomNumber;
 		do
 		{
-			i = 0 + rand() % 10;//picks random number
+			randomNumber = 0 + rand() % 10;//picks random number
 			int r = 0;
 			int c = 0;
-			switch (i)
+			switch (randomNumber)
 			{
 				case 1:
 					r = 0;
@@ -224,18 +346,79 @@ class computerAI
 					break;
 			}
 
-			if (p[r][c] == "O" || p[r][c] == "X")//checks to see if the selected board slot is taken
+			if (p[r][c] != "O" || p[r][c] != "X")//checks to see if the selected board slot is taken
 			{
-				//cout << "That spot is taken. Enter a number between 1-9" << endl;
-			}
-			else
-			{
-				p[r][c] = x_o;
-				break;
+				return randomNumber;//cout << "That spot is taken. Enter a number between 1-9" << endl;
 			}
 		} while (true);
 
-		return i;
+		//return i;
+	}
+
+	int move(string p[][3], string computer, string player)
+	{
+		//check for wins in rows
+		for (int i = 0; i < 3; i++)
+		{
+			//cout << "check row " << computer << endl;
+			if (p[i][0] == computer && p[i][1] == computer && p[i][2] != player)//1, 2
+			{
+				return 3 + (i * 3);
+			}
+			else if (p[i][0] == computer && p[i][2] == computer && p[i][1] != player)//1, 3
+			{
+				return 2 + (i * 3);
+			}
+			else if (p[i][1] == computer && p[i][2] == computer && p[i][0] != player)//1, 3
+			{
+				return 1 + (i * 3);
+			}
+		}
+		//col
+		for (int i = 0; i < 3; i++)
+		{
+			//cout << "check col " << computer << endl;
+			if (p[0][i] == computer && p[1][i] == computer && p[2][i] != player)
+			{
+				return 7 + i;
+			}
+			else if (p[0][i] == computer && p[2][i] == computer && p[1][i] != player)
+			{
+				return 4 + i;
+			}
+			else if (p[1][i] == computer && p[2][i] == computer && p[0][i] != player)
+			{
+				return 1 + i;
+			}
+		}
+		//diagnal
+		//cout << "check diag " << computer << endl;
+		if (p[0][0] == computer && p[1][1] == computer  && p[2][2] != player)
+		{
+			return 9;
+		}
+		else if (p[0][0] == computer && p[2][2] == computer && p[1][1] != player)
+		{
+			return 5;
+		}
+		else if (p[1][1] == computer && p[2][2] == computer && p[0][0] != player)
+		{
+			return 1;
+		}
+		else if (p[0][2] == computer && p[1][1] == computer && p[2][0] != player)
+		{
+			return 7;
+		}
+		else if (p[0][2] == computer && p[2][0] == computer && p[1][1] != player)
+		{
+			return 5;
+		}
+		else if (p[1][1] == computer && p[2][0] == computer && p[0][2] != player)
+		{
+			return 3;
+		}
+
+		return 0;
 	}
 
 };
@@ -262,7 +445,7 @@ int main()
 			if (first == 1)
 			{
 				//player goes first
-				pickLocation(game.board);
+				game.move(pickLocation(game.board), player);
 				cout << "Player" << endl;
 				game.drawBoard();
 
@@ -277,7 +460,7 @@ int main()
 					break;
 				}
 
-				comp.AIpick(game.board, computer);
+				game.move(comp.AIpick(game.board, computer), computer);
 				cout << "Computer" << endl;
 				game.drawBoard();
 
@@ -291,7 +474,7 @@ int main()
 			else if (first == 2)
 			{
 				//computer goes first
-				comp.AIpick(game.board, computer);
+				game.move(comp.AIpick(game.board, computer), computer);
 				cout << "Computer" << endl;
 				game.drawBoard();
 
@@ -306,7 +489,7 @@ int main()
 					break;
 				}
 
-				pickLocation(game.board);
+				game.move(pickLocation(game.board), player);
 				cout << "Player" << endl;
 				game.drawBoard();
 
@@ -387,8 +570,7 @@ int pickLocation(string p[][3])
 			}
 			else
 			{
-				p[r][c] = player;
-				break;
+				return i;
 			}
 		}
 		else
@@ -398,7 +580,7 @@ int pickLocation(string p[][3])
 
 	} while (true);
 
-	return i;
+	return 0;
 }
 
 //displayes who goes first
