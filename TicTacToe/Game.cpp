@@ -5,6 +5,7 @@ string computer;
 
 int main()
 {
+	OutputDebugString("Game Starts\n");
 	gameBoard game;
 	computerAI comp;
 	do
@@ -113,15 +114,25 @@ int main()
 //user picks a location and it validates that the spot is not taken
 int pickLocation(string p[][3])
 {
-	string input;
-	cout << "Pick a location 1-9" << endl;
-	
+	string select;
 	int i;
 
+	cout << "Pick a location 1-9" << endl;
+	
 	do
 	{
-		getline(cin, input);
-		i = atoi(input.c_str());
+		while (cin >> select == false)
+		{
+
+			if(cin.eof()) // quit if Ctrl+Z
+				break; 
+			if(cin == "1" || cin == "2" || cin == "3" || cin == "4" || cin == "5" || cin == "6" || cin == "7" || cin == "8" || cin == "9") 
+				break;
+			cin.clear(); // otherwise clear error states
+			cout << "Enter a Valid Number" << endl;
+		} 
+
+		i = atoi(select.c_str());
 
 		if (i > 0 && i < 10)//checks to see if the input is between 1 and 9
 		{
@@ -177,11 +188,6 @@ int pickLocation(string p[][3])
 				return i;
 			}
 		}
-		else
-		{
-			cout << "Enter a number between 1-9" << endl;
-		}
-
 	} while (true);
 
 	return 0;
@@ -191,46 +197,60 @@ int pickLocation(string p[][3])
 int goFirst()
 {
 	string select;
-	do
+
+	cout << "Who goes first? 1 = You, 2 = Computor, 3 = computer fight " << endl;
+
+	while (cin >> select == false)
 	{
-		cout << "Who goes first? 1 = You, 2 = Computor, 3 = computer fight " << endl;
-		getline(cin, select);
-		
-		if (select == "1")
-		{
-			player = "X";
-			computer = "O";
-			return 1;
-		}
-		else if(select == "2")
-		{
-			player = "O";
-			computer = "X";
-			return 2;
-		}
-		else if(select == "3")
-		{
-			player = "O";
-			computer = "X";
-			return 3;
-		}			
-	} while (true);
+		if(cin.eof()) // quit if Ctrl+Z
+			break; 
+		if(cin == "1" || cin == "2" || cin == "3") 
+			break;
+		cin.clear(); // otherwise clear error states
+		cout << "Enter a Valid Number" << endl;
+	}
+
+	if (select == "1")
+	{
+		player = "X";
+		computer = "O";
+		return 1;
+	}
+	else if(select == "2")
+	{
+		player = "O";
+		computer = "X";
+		return 2;
+	}
+	else if(select == "3")
+	{
+		player = "O";
+		computer = "X";
+		return 3;
+	}			
 }
 
 bool playAgain()
 {
-	do
+	string select;
+	cout << "Play agian? 1 = Yes, 2 = No(Quits Application) " << endl;
+
+	while (cin >> select == false)
 	{
-		string select;
-		cout << "Play agian? 1 = Yes, 2 = No(Quits Application) " << endl;
-		getline(cin, select);
-		if(select == "1")
-		{
-			return true;
-		}
-		else if (select == "2")
-		{
-			return false;
-		}
-	} while (true);
+		if(cin.eof()) // quit if Ctrl+Z
+			break; 
+		if(cin == "1" || cin == "2") 
+			break;
+		cin.clear(); // otherwise clear error states
+		cout << "Enter a Valid Number" << endl;
+	}
+
+	if(select == "1")
+	{
+		return true;
+	}
+	else if (select == "2")
+	{
+		return false;
+	}
 }
