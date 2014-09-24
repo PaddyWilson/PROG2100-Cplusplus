@@ -8,7 +8,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <Windows.h> // for the OutputDebugString("");
+
 using namespace std;
+
+int pickLocation(string p[][3]);
+int goFirst();
+bool playAgain();
 
 class gameBoard
 {
@@ -31,10 +37,6 @@ class computerAI
 	public:
 		//ai picks locaton
 		int AIpick(string p[][3], string x_o);
-
-		//randomly select a spot and validate its not taken
-		//if it is taken it tries again
-		int randomMove(string p[3][3]);
 
 		int checkWinsOrBlocks(string p[][3], string computer, string player);
 };

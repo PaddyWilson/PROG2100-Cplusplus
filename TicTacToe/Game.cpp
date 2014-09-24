@@ -1,11 +1,4 @@
-
 #include "header.h"
-
-#include <Windows.h>// for outputdebugstring function
-
-int pickLocation(string p[][3]);
-int goFirst();
-bool playAgain();
 
 string player;
 string computer;
@@ -25,7 +18,7 @@ int main()
 			if (first == 1)
 			{
 				//player goes first
-				game.move(comp.AIpick(game.board, player), player);
+				game.move(pickLocation(game.board), player);
 				cout << "Player" << endl;
 				game.drawBoard();
 
@@ -40,8 +33,10 @@ int main()
 					break;
 				}
 
-				game.move(comp.AIpick(game.board, computer), computer);
-				cout << "Computer" << endl;
+
+				int move = comp.AIpick(game.board, computer);
+				game.move(move, computer);
+				cout << "The Computer Picked: " << move << endl;
 				game.drawBoard();
 
 				if (game.checkWin(computer) == 1)
@@ -54,8 +49,9 @@ int main()
 			else if (first == 2)
 			{
 				//computer goes first
-				game.move(comp.AIpick(game.board, computer), computer);
-				cout << "Computer" << endl;
+				int move = comp.AIpick(game.board, computer);
+				game.move(move, computer);
+				cout << "The Computer Picked: " << move << endl;
 				game.drawBoard();
 
 				if (game.checkWin(computer) == 1)
@@ -71,6 +67,35 @@ int main()
 
 				game.move(pickLocation(game.board), player);
 				cout << "Player" << endl;
+				game.drawBoard();
+
+				if (game.checkWin(player) == 1)
+				{
+					cout << player << " Wins" << endl;
+					break;
+				}
+			}
+			else if (first == 3)//computer fight
+			{
+				int move = comp.AIpick(game.board, computer);
+				game.move(move, computer);
+				cout << "The Computer 1 Picked: " << move << endl;
+				game.drawBoard();
+
+				if (game.checkWin(computer) == 1)
+				{
+					cout << computer << " Wins" << endl;
+					break;
+				}
+				else if (game.checkWin("") == 2)	
+				{
+					cout << "Its a Tie" << endl;
+					break;
+				}
+
+				move = comp.AIpick(game.board, player);
+				game.move(move, player);
+				cout << "The Computer 2 Picked: " << move << endl;
 				game.drawBoard();
 
 				if (game.checkWin(player) == 1)
@@ -168,7 +193,7 @@ int goFirst()
 	string select;
 	do
 	{
-		cout << "Who goes first? 1 = You, 2 = Computor " << endl;
+		cout << "Who goes first? 1 = You, 2 = Computor, 3 = computer fight " << endl;
 		getline(cin, select);
 		
 		if (select == "1")
@@ -183,9 +208,11 @@ int goFirst()
 			computer = "X";
 			return 2;
 		}
-		else
+		else if(select == "3")
 		{
-			cout << "error" << endl;
+			player = "O";
+			computer = "X";
+			return 3;
 		}			
 	} while (true);
 }

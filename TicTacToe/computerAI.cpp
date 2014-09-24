@@ -3,6 +3,7 @@
 //ai picks locaton
 int computerAI::AIpick(string p[][3], string x_o)
 {
+	OutputDebugString("Computer Pick Start \n");
 	string player;
 	/*
 		1|2|3
@@ -21,7 +22,8 @@ int computerAI::AIpick(string p[][3], string x_o)
 		player = "X";
 	}
 
-	//checks to see if its the first play of the game 
+	//checks to see if its the first play of the game
+	OutputDebugString("Computer: First Move\n");
 	int i = 0;
 	int count = 0;
 	for (int r = 0; r < 3; r++)
@@ -37,42 +39,39 @@ int computerAI::AIpick(string p[][3], string x_o)
 	}
 	if (count == 9)
 	{
+		OutputDebugString("Computer: First Move Yes\n");
 		return 1;
 	}
 
+	int x = 0;
+
 	//rest of game
 	//checks to see if it can win
-	int x = checkWinsOrBlocks(p, x_o, player);
+	OutputDebugString("Computer: Check Wins\n");
+	x = checkWinsOrBlocks(p, x_o, player);
 	//cout << x << " comp win" << endl;
 	if (x != 0)
 	{
-		cout << x << " computer location" << endl;
+		OutputDebugString("Computer: Check Wins Yes\n");
 		return x;
 	}
 
 	//checks for blocks
+	OutputDebugString("Computer: Check Blocks\n");
 	x = checkWinsOrBlocks(p, player, x_o);
 	//cout << x << " comp block" << endl;
 	if (x!=0)
 	{
-		cout << x << " computer location" << endl;
+		OutputDebugString("Computer: Check Block Yes\n");
 		return x;
 	}
-		
-	x = randomMove(p);
-	cout << x << " computer location" << endl;
-	return x;
-}
-
-//randomly select a spot and validate its not taken
-//if it is taken it tries again
-int computerAI::randomMove(string p[3][3])
-{
+	
+	OutputDebugString("Computer: Random Number\n");
 	srand(static_cast<unsigned int>(time(NULL)));
 	int randomNumber;
 	do
 	{
-		randomNumber = 0 + rand() % 10;//picks random number
+		randomNumber = 0 + rand() % 9;//picks random number
 		int r = 0;
 		int c = 0;
 		switch (randomNumber)
@@ -117,11 +116,15 @@ int computerAI::randomMove(string p[3][3])
 				break;
 		}
 
-		if (p[r][c] != "O" || p[r][c] != "X")//checks to see if the selected board slot is taken
+		if (p[r][c] != "O" && p[r][c] != "X")//checks to see if the selected board slot is taken
 		{
+			OutputDebugString("Computer: Random Number Yes\n");
 			return randomNumber;//cout << "That spot is taken. Enter a number between 1-9" << endl;
 		}
+		OutputDebugString("Computer: Random Number Pick Again\n");
 	} while (true);
+
+	return x;
 }
 
 int computerAI::checkWinsOrBlocks(string p[][3], string computer, string player)

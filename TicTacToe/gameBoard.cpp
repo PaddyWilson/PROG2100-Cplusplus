@@ -133,14 +133,14 @@ void gameBoard::move(int i, string x_o)
 
 //draws board to screen
 void gameBoard::drawBoard()
+{
+	for (int r = 0; r < 3; r++)
 	{
-		for (int r = 0; r < 3; r++)
+		for (int c = 0; c < 3; c++)
 		{
-			for (int c = 0; c < 3; c++)
-			{
-				cout << "[" << board[r][c] << "]";
-				if (c == 2)
-					cout << endl;
-			}
+			cout << "[" << board[r][c] << "]";
+			if (c == 2)
+				cout << endl;
 		}
 	}
+}
