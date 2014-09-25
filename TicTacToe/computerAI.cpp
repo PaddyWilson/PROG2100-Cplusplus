@@ -7,9 +7,9 @@ int computerAI::AIpick(string p[][3], string x_o)
 	string player;
 	/*
 		1|2|3
-		-------
+		-----
 		4|5|6
-		-------
+		-----
 		7|8|9
 	*/
 		
@@ -40,7 +40,7 @@ int computerAI::AIpick(string p[][3], string x_o)
 	if (count == 9)
 	{
 		OutputDebugString("Computer: First Move Yes\n");
-		return 1;
+		return 5;
 	}
 
 	int x = 0;
@@ -66,11 +66,67 @@ int computerAI::AIpick(string p[][3], string x_o)
 		return x;
 	}
 	
+	if (p[1][1] == player && p[0][0] != x_o)
+	{
+		return 1;
+	}
+	else if (p[0][0] == player && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[0][2] == player && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[2][0] == player && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[2][2] == player  && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[0][1] == player  && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[1][0] == player  && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[2][1] == player  && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[1][2] == player  && p[1][1] != x_o)
+	{
+		return 5;
+	}
+	else if (p[0][0] == player && p[2][2] != x_o)
+	{
+		return 9;
+	}
+	else if (p[0][2] == player && p[2][0] != x_o)
+	{
+		return 7;
+	}
+	else if (p[2][0] == player && p[0][2] != x_o)
+	{
+		return 3;
+	}
+	else if (p[2][2] == player  && p[0][0] != x_o)
+	{
+		return 1;
+	}
+
+	//uses rng as a last resort
 	OutputDebugString("Computer: Random Number\n");
 	srand(static_cast<unsigned int>(time(NULL)));
+	int a = 0;
 	int randomNumber;
 	do
 	{
+		a++;
 		randomNumber = 0 + rand() % 9;//picks random number
 		int r = 0;
 		int c = 0;
@@ -121,6 +177,11 @@ int computerAI::AIpick(string p[][3], string x_o)
 			OutputDebugString("Computer: Random Number Yes\n");
 			return randomNumber;//cout << "That spot is taken. Enter a number between 1-9" << endl;
 		}
+		//if (a >= 9)//if random goes more than 9 times or more it breaks
+		//{
+		//	OutputDebugString("Computer: Random Number Went 9 or more times\n");
+		//	break;
+		//}
 		OutputDebugString("Computer: Random Number Pick Again\n");
 	} while (true);
 

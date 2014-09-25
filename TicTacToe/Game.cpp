@@ -45,7 +45,6 @@ int main()
 					cout << computer << " Wins" << endl;
 					break;
 				}
-
 			}
 			else if (first == 2)
 			{
