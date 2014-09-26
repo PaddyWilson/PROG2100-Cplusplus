@@ -54,6 +54,11 @@ int gameBoard::checkWin(string x_o)
 		return 1;
 	}
 
+	return 0;
+}
+
+bool gameBoard::checkTie()
+{
 	//tie
 	int i = 0;
 	int count = 0;
@@ -62,23 +67,18 @@ int gameBoard::checkWin(string x_o)
 		for (int c = 0; c < 3; c++)
 		{
 			i++;
-			if (board[r][c] == to_string(i))
-			{
-				return 0;
-			}
-			else
+			if (board[r][c] != to_string(i))
 			{
 				count++;
 			}
 		}
 	}
 	//cout << count << endl;
-	if (count == 9)
+	if (count >= 9)
 	{
-		return 2;
+		return true;
 	}
-
-	return 0;
+	return false;
 }
 
 //gets the move and places a X or O there

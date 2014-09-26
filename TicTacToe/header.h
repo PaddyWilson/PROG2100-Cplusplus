@@ -26,6 +26,7 @@ class gameBoard
 		void resetBorad();
 		//checks for wins or ties
 		int checkWin(string x_o);
+		bool checkTie();
 		//gets the move and places a X or O there
 		void move(int i, string x_o);
 		//draws board to screen

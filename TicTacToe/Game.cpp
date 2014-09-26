@@ -1,3 +1,4 @@
+#include <regex>
 #include "header.h"
 
 string player;
@@ -28,7 +29,7 @@ int main()
 					cout << player << " Wins" << endl;
 					break;
 				}
-				else if (game.checkWin("") == 2)	
+				else if (game.checkTie())	
 				{
 					cout << "Its a Tie" << endl;
 					break;
@@ -59,7 +60,7 @@ int main()
 					cout << computer << " Wins" << endl;
 					break;
 				}
-				else if (game.checkWin("") == 2)	
+				else if (game.checkTie())	
 				{
 					cout << "Its a Tie" << endl;
 					break;
@@ -67,35 +68,6 @@ int main()
 
 				game.move(pickLocation(game.board), player);
 				cout << "Player" << endl;
-				game.drawBoard();
-
-				if (game.checkWin(player) == 1)
-				{
-					cout << player << " Wins" << endl;
-					break;
-				}
-			}
-			else if (first == 3)//computer fight
-			{
-				int move = comp.AIpick(game.board, computer);
-				game.move(move, computer);
-				cout << "The Computer 1 Picked: " << move << endl;
-				game.drawBoard();
-
-				if (game.checkWin(computer) == 1)
-				{
-					cout << computer << " Wins" << endl;
-					break;
-				}
-				else if (game.checkWin("") == 2)	
-				{
-					cout << "Its a Tie" << endl;
-					break;
-				}
-
-				move = comp.AIpick(game.board, player);
-				game.move(move, player);
-				cout << "The Computer 2 Picked: " << move << endl;
 				game.drawBoard();
 
 				if (game.checkWin(player) == 1)
@@ -118,19 +90,8 @@ int pickLocation(string p[][3])
 
 	cout << "Pick a location 1-9" << endl;
 	
-	do
+	while (cin >> select)
 	{
-		while (cin >> select == false)
-		{
-
-			if(cin.eof()) // quit if Ctrl+Z
-				break; 
-			if(cin == "1" || cin == "2" || cin == "3" || cin == "4" || cin == "5" || cin == "6" || cin == "7" || cin == "8" || cin == "9") 
-				break;
-			cin.clear(); // otherwise clear error states
-			cout << "Enter a Valid Number" << endl;
-		} 
-
 		i = atoi(select.c_str());
 
 		if (i > 0 && i < 10)//checks to see if the input is between 1 and 9
@@ -176,7 +137,7 @@ int pickLocation(string p[][3])
 					break;
 				default:
 					break;
-			}
+			}//end switch
 
 			if (p[r][c] == "O" || p[r][c] == "X")//checks to see if the selected board slot is taken
 			{
@@ -186,70 +147,56 @@ int pickLocation(string p[][3])
 			{
 				return i;
 			}
-		}
-	} while (true);
+
+		}//end if (i > 0 && i < 10)
+		else
+			cout << "Enter a Valid Number" << endl;
+
+	}//end while (cin >> select)
 
 	return 0;
-}
+}//end method
 
 //displayes who goes first
 int goFirst()
 {
 	string select;
 
-	cout << "Who goes first? 1 = You, 2 = Computor, 3 = computer fight " << endl;
+	cout << "Who goes first? 1 = You, 2 = Computor" << endl;
 
-	while (cin >> select == false)
+	while (cin >> select)
 	{
-		if(cin.eof()) // quit if Ctrl+Z
-			break; 
-		if(cin == "1" || cin == "2" || cin == "3") 
-			break;
-		cin.clear(); // otherwise clear error states
+		if (select == "1")
+		{
+			player = "X";
+			computer = "O";
+			return 1;
+		}
+		else if(select == "2")
+		{
+			player = "O";
+			computer = "X";
+			return 2;
+		}
 		cout << "Enter a Valid Number" << endl;
-	}
-
-	if (select == "1")
-	{
-		player = "X";
-		computer = "O";
-		return 1;
-	}
-	else if(select == "2")
-	{
-		player = "O";
-		computer = "X";
-		return 2;
-	}
-	else if(select == "3")
-	{
-		player = "O";
-		computer = "X";
-		return 3;
 	}			
 }
 
 bool playAgain()
 {
 	string select;
-	cout << "Play agian? 1 = Yes, 2 = No(Quits Application) " << endl;
+	cout << "Play agian? 1 = Yes, 2 = No(Quits Application)" << endl;
 
-	while (cin >> select == false)
+	while (cin >> select)
 	{
-		if(cin.eof()) // quit if Ctrl+Z
-			break; 
-		if(cin == "1" || cin == "2") 
-			break;
-		cin.clear(); // otherwise clear error states
-		cout << "Enter a Valid Number" << endl;
-	}
-
-	if(select == "1")
-	{
-		return true;
-	}
-	else if (select == "2")
-	{
-		return false;
+		if(select == "1")
+		{
+			return true;
+		}
+		else if (select == "2")
+		{
+			return false;
+		}
+		cout << "Enter a Valid Number. 1 = Yes, 2 = No(Quits Application)" << endl;
 	}
 }

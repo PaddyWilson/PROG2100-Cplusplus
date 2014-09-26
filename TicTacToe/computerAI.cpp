@@ -3,7 +3,7 @@
 //ai picks locaton
 int computerAI::AIpick(string p[][3], string x_o)
 {
-	OutputDebugString("Computer Pick Start \n");
+	OutputDebugString("Computer Pick Start *******************************\n");
 	string player;
 	/*
 		1|2|3
@@ -66,55 +66,84 @@ int computerAI::AIpick(string p[][3], string x_o)
 		return x;
 	}
 	
-	if (p[1][1] == player && p[0][0] != x_o)
+	
+	if (p[1][1] == player && (p[0][0] != x_o && p[0][0] != player))
 	{
 		return 1;
 	}
-	else if (p[0][0] == player && p[1][1] != x_o)
+	else if (p[0][0] == player && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[0][2] == player && p[1][1] != x_o)
+	else if (p[0][2] == player && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[2][0] == player && p[1][1] != x_o)
+	else if (p[2][0] == player && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[2][2] == player  && p[1][1] != x_o)
+	else if (p[2][2] == player  && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[0][1] == player  && p[1][1] != x_o)
+	else if (p[0][1] == player  && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[1][0] == player  && p[1][1] != x_o)
+	else if (p[1][0] == player  && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[2][1] == player  && p[1][1] != x_o)
+	else if (p[2][1] == player  && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[1][2] == player  && p[1][1] != x_o)
+	else if (p[1][2] == player  && (p[1][1] != x_o && p[1][1] != player))
 	{
 		return 5;
 	}
-	else if (p[0][0] == player && p[2][2] != x_o)
+	else if (p[0][0] == player && (p[2][2] != x_o && p[2][2] != player))
 	{
 		return 9;
 	}
-	else if (p[0][2] == player && p[2][0] != x_o)
+	else if (p[0][2] == player && (p[2][0] != x_o && p[2][0] != player))
 	{
 		return 7;
+	}	
+	else if (p[2][2] == player  && (p[0][0] != x_o && p[0][0] != player))
+	{
+		return 1;
 	}
-	else if (p[2][0] == player && p[0][2] != x_o)
+	else if ((p[2][2] == player && p[0][0] == player) && (p[0][1] != x_o && p[0][1] != player))
+	{
+		return 2;
+	}
+	else if ((p[0][2] == player && p[2][0] == player)  && p[0][1] != x_o)
+	{
+		return 2;
+	}
+	else if (p[1][1] == player && p[2][2] == player && (p[0][2] != x_o && p[0][2] != x_o))
 	{
 		return 3;
 	}
-	else if (p[2][2] == player  && p[0][0] != x_o)
+	else if (p[2][0] == player && (p[0][2] != x_o && p[0][2] != player))
+	{
+		return 3;
+	}
+	else if (p[1][2] == player && p[2][1] == player && (p[2][2] != x_o && p[2][2] != player))
+	{
+		return 9;
+	}
+	else if (p[1][0] == player && p[2][1] == player && (p[2][0] != x_o && p[2][0] != player))
+	{
+		return 7;
+	}
+	else if (p[0][2] == player && p[1][2] == player && (p[0][2] != x_o && p[0][2] != x_o))
+	{
+		return 3;
+	}
+	else if (p[0][1] == player && p[1][0] == player && (p[0][0] != x_o && p[0][0] != x_o))
 	{
 		return 1;
 	}
