@@ -4,6 +4,46 @@
 string player;
 string computer;
 
+class Validator
+{
+public:
+	bool inputMechanism(string* inputString, int topOfASCIIRange)
+	{
+		char tempKey;
+		const static int maxLineLength = 1;
+
+		do{
+			tempKey = _getch();
+			if ((tempKey >= 49 && tempKey <= topOfASCIIRange))//ascii range 49 + other range
+			{
+				//when valid char pressed, accept and print to screen
+				if (maxLineLength > (*inputString).length())
+				{
+					(*inputString) += tempKey;
+					printf("%c", tempKey);
+				}
+			}//end if
+				else if (tempKey == 8)//ascii backspace
+				{
+					//if back pressed, pop char off string, and erase from screen
+					if ((*inputString).length() > 0)
+					{
+						(*inputString).erase((*inputString).length() - 1, 1);
+						printf("\b \b");
+					}
+				} //end else if
+				else if (tempKey == -32)//drop off any arrow key pressed
+				{
+					_getch();
+				}// end else if
+
+			}while (tempKey != 13);
+
+			printf("\n");
+			return true;
+	}//end method inputMechanism
+};//end class
+
 int main()
 {
 	OutputDebugString("Game Starts\n");
@@ -85,13 +125,23 @@ int main()
 //user picks a location and it validates that the spot is not taken
 int pickLocation(string p[][3])
 {
+	Validator myVal;//declare val obj
 	string select;
 	int i;
 
 	cout << "Pick a location 1-9" << endl;
 	
-	while (cin >> select)
+	while (true)
 	{
+		while (true)
+		{
+			//call mechanism to interactively handle keyboard input
+			if (myVal.inputMechanism(&select, 57))
+				break;
+			else
+				cout << "Enter a Valid Number" << endl;	
+		}
+
 		i = atoi(select.c_str());
 
 		if (i > 0 && i < 10)//checks to see if the input is between 1 and 9
@@ -161,42 +211,53 @@ int pickLocation(string p[][3])
 int goFirst()
 {
 	string select;
+	Validator myVal;//declare val obj
 
 	cout << "Who goes first? 1 = You, 2 = Computor" << endl;
 
-	while (cin >> select)
+	while (true)
 	{
-		if (select == "1")
-		{
-			player = "X";
-			computer = "O";
-			return 1;
-		}
-		else if(select == "2")
-		{
-			player = "O";
-			computer = "X";
-			return 2;
-		}
-		cout << "Enter a Valid Number" << endl;
-	}			
+		//call mechanism to interactively handle keyboard input
+		if (myVal.inputMechanism(&select, 50))
+			break;
+		else
+			cout << "Enter a Valid Number" << endl;	
+	}
+	if (select == "1")
+	{
+		player = "X";
+		computer = "O";
+		return 1;
+	}
+	else if(select == "2")
+	{
+		player = "O";
+		computer = "X";
+		return 2;
+	}		
 }
 
 bool playAgain()
 {
+	Validator myVal;//declare val obj
 	string select;
 	cout << "Play agian? 1 = Yes, 2 = No(Quits Application)" << endl;
 
-	while (cin >> select)
+	while (true)
 	{
-		if(select == "1")
-		{
-			return true;
-		}
-		else if (select == "2")
-		{
-			return false;
-		}
-		cout << "Enter a Valid Number. 1 = Yes, 2 = No(Quits Application)" << endl;
+		//call mechanism to interactively handle keyboard input
+		if (myVal.inputMechanism(&select, 50))
+			break;
+		else
+			cout << "Enter a Valid Number" << endl;	
+	}
+
+	if(select == "1")
+	{
+		return true;
+	}
+	else if (select == "2")
+	{
+		return false;
 	}
 }

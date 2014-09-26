@@ -1,50 +1,81 @@
-#include <iostream>
-#include <cstdlib>
-#include <conio.h>
-#include <string>
-#include <sstream>
-#include <stdio.h>
-#include <stdlib.h>
+//this validation prevents the user from crashing your program
+//using input such as 'ctrl z'
 
+#include <iostream>
+#include <string>
+#include <conio.h>
+#include <cstdlib>
+#include <stdlib.h>
 using namespace std;
 
-bool inputValidation(string* inputString)
+
+
+class Validator
 {
-	char tempKey;
-	const static int maxLineLength = 20;
-
-	do
+public:
+	bool inputMechanism(string* inputString)
 	{
-		tempKey = _getch();
+		cout << "method inputMechansim involked" << endl;
+		char tempKey;
+		const static int maxLineLength = 1;
 
-		if ((tempKey >= 32 && tempKey < 126))
-		{
-			//when valid charaters pressed, accept and print to screen
-			if (maxLineLength  > (*inputString).length())
+		do{
+			tempKey = _getch();
+			if ((tempKey >= 49 && tempKey <= 50))//ascii range 49 to 50
 			{
-				(*inputString) += tempKey;
-				printf("%c",  tempKey);
-			}
-			else if (tempKey == 8)
-			{
-				//if backspace is pressed, pop char off of string and remove from screen
-				if ((*inputString).length() >0)
+				//when valid char pressed, accept and print to screen
+				if (maxLineLength > (*inputString).length())
 				{
-					(*inputString).erase((*inputString).length() - 1, 1);
-					printf("\b \b");
+					(*inputString) += tempKey;
+					printf("%c", tempKey);
 				}
-			}//end of if else
-			else if (tempKey == -32)//arrow keys
-			{
-				_getch();
-			}
-		}
+			}//end if
+				else if (tempKey == 8)//ascii backspace
+				{
+					//if back pressed, pop char off string, and erase from screen
+					if ((*inputString).length() > 0)
+					{
+						(*inputString).erase((*inputString).length() - 1, 1);
+						printf("\b \b");
+					}
+				} //end else if
+				else if (tempKey == -32)//drop off any arrow key pressed
+				{
+					_getch();
+				}// end else if
 
-	} while (tempKey != 13); //end do
+			}while (tempKey != 13);
 
-	printf("\n");
+			printf("\n");
+			return true;
+	}//end method inputMechanism
+};//end class
 
-	return true;
-}
 
+int main()
+{
+	string strStuff;
+	Validator myVal;//declare val obj
 
+	//call mechanism to interactively handle keyboard input
+	if (myVal.inputMechanism(&strStuff))
+		cout << "The input string: " << strStuff << " is valid" << endl;
+	else
+		cout << "The input string: " << strStuff << " is NOT valid!" << endl;
+	_getch();
+	return 0;
+}//end main
+
+//int main()
+//{
+//	string strStuff;
+//	Validator myVal;//declare val obj
+//
+//	//call mechanism to interactively handle keyboard input
+//	if (myVal.inputMechanism(&strStuff))
+//		cout << "The input string: " << strStuff << " is valid" << endl;
+//	else
+//		cout << "The input string: " << strStuff << " is NOT valid!" << endl;
+//	_getch();
+//	return 0;
+//}//end main
