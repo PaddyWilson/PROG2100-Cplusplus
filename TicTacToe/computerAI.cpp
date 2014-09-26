@@ -150,7 +150,7 @@ int computerAI::AIpick(string p[][3], string x_o)
 
 	//uses rng as a last resort
 	OutputDebugString("Computer: Random Number\n");
-	srand(static_cast<unsigned int>(time(NULL)));
+	//srand(static_cast<unsigned int>(time(NULL)));
 	int a = 0;
 	int randomNumber;
 	do

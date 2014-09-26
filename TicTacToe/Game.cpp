@@ -1,4 +1,3 @@
-#include <regex>
 #include "header.h"
 
 string player;
@@ -11,8 +10,10 @@ public:
 	{
 		char tempKey;
 		const static int maxLineLength = 1;
+		bool empty = true;
 
-		do{
+		do
+		{
 			tempKey = _getch();
 			if ((tempKey >= 49 && tempKey <= topOfASCIIRange))//ascii range 49 + other range
 			{
@@ -21,26 +22,32 @@ public:
 				{
 					(*inputString) += tempKey;
 					printf("%c", tempKey);
+					empty = false;
 				}
 			}//end if
-				else if (tempKey == 8)//ascii backspace
+			else if (tempKey == 8)//ascii backspace
+			{
+				//if back pressed, pop char off string, and erase from screen
+				if ((*inputString).length() > 0)
 				{
-					//if back pressed, pop char off string, and erase from screen
-					if ((*inputString).length() > 0)
-					{
-						(*inputString).erase((*inputString).length() - 1, 1);
-						printf("\b \b");
-					}
-				} //end else if
-				else if (tempKey == -32)//drop off any arrow key pressed
-				{
-					_getch();
-				}// end else if
+					(*inputString).erase((*inputString).length() - 1, 1);
+					printf("\b \b");
+					empty = true;
+				}
+			} //end else if
+			else if (tempKey == -32)//drop off any arrow key pressed
+			{
+				_getch();
+			}// end else if
 
-			}while (tempKey != 13);
+			if (tempKey == 13 && empty != true)
+			{
+				break;
+			}
+		}while (true);
 
-			printf("\n");
-			return true;
+		printf("\n");
+		return true;
 	}//end method inputMechanism
 };//end class
 
@@ -130,9 +137,10 @@ int pickLocation(string p[][3])
 	int i;
 
 	cout << "Pick a location 1-9" << endl;
-	
+		
 	while (true)
 	{
+		select = "";
 		while (true)
 		{
 			//call mechanism to interactively handle keyboard input
@@ -144,63 +152,57 @@ int pickLocation(string p[][3])
 
 		i = atoi(select.c_str());
 
-		if (i > 0 && i < 10)//checks to see if the input is between 1 and 9
+		int r, c;
+		switch (i)
 		{
-			int r, c;
-			switch (i)
-			{
-				case 1:
-					r = 0;
-					c = 0;
-					break;
-				case 2:
-					r = 0;
-					c = 1;
-					break;
-				case 3:
-					r = 0;
-					c = 2;
-					break;
-				case 4:
-					r = 1;
-					c = 0;
-					break;
-				case 5:
-					r = 1;
-					c = 1;
-					break;
-				case 6:
-					r = 1;
-					c = 2;
-					break;
-				case 7:
-					r = 2;
-					c = 0;
-					break;
-				case 8:
-					r = 2;
-					c = 1;
-					break;
-				case 9:
-					r = 2;
-					c = 2;
-					break;
-				default:
-					break;
-			}//end switch
+			case 1:
+				r = 0;
+				c = 0;
+				break;
+			case 2:
+				r = 0;
+				c = 1;
+				break;
+			case 3:
+				r = 0;
+				c = 2;
+				break;
+			case 4:
+				r = 1;
+				c = 0;
+				break;
+			case 5:
+				r = 1;
+				c = 1;
+				break;
+			case 6:
+				r = 1;
+				c = 2;
+				break;
+			case 7:
+				r = 2;
+				c = 0;
+				break;
+			case 8:
+				r = 2;
+				c = 1;
+				break;
+			case 9:
+				r = 2;
+				c = 2;
+				break;
+			default:
+				break;
+		}//end switch
 
-			if (p[r][c] == "O" || p[r][c] == "X")//checks to see if the selected board slot is taken
-			{
-				cout << "That spot is taken. Enter a number between 1-9" << endl;
-			}
-			else
-			{
-				return i;
-			}
-
-		}//end if (i > 0 && i < 10)
+		if (p[r][c] == "O" || p[r][c] == "X")//checks to see if the selected board slot is taken
+		{
+			cout << "That spot is taken. Enter a number between 1-9" << endl;
+		}
 		else
-			cout << "Enter a Valid Number" << endl;
+		{
+			return i;
+		}
 
 	}//end while (cin >> select)
 
