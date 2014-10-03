@@ -16,6 +16,7 @@ public:
 	RationalNumber(int numerator) :numerator(numerator), denominator(1){}//if one number is entered
 	RationalNumber(int numerator, int denominator) :numerator(numerator), denominator(denominator){}//two numbers entered
 
+	//addition
 	RationalNumber operator+ (RationalNumber &rightObj)
 	{
 		if (this->denominator == rightObj.denominator)
@@ -43,6 +44,7 @@ public:
 		}
 	}
 
+	//subtration
 	RationalNumber operator- (RationalNumber &rightObj)
 	{
 		if (this->denominator == rightObj.denominator)
@@ -70,39 +72,89 @@ public:
 		}
 	}
 
+	//multiplication
 	RationalNumber operator* (RationalNumber &rightObj)
 	{
 		return RationalNumber(this->numerator * rightObj.numerator, this->denominator * rightObj.denominator);
 	}
 
+	//divide
 	RationalNumber operator/ (RationalNumber &rightObj)
 	{
 		return RationalNumber(this->numerator * rightObj.denominator, this->denominator * rightObj.numerator);
 	}
 
-	//for testing
-	void print()
+	//equal to
+	bool operator== (RationalNumber &rightObj)
 	{
-		cout << numerator << "/" << denominator << endl;
+		if ((this->numerator * rightObj.denominator) == (this->denominator * rightObj.numerator))
+		{
+			return true;
+		}
+		return false;
 	}
 
+	//greater than
+	bool operator> (RationalNumber &rightObj)
+	{
+		if ((this->numerator * rightObj.denominator) == (this->denominator * rightObj.numerator))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	//less than
+	bool operator< (RationalNumber &rightObj)
+	{
+		return RationalNumber(this->numerator * rightObj.denominator, this->denominator * rightObj.numerator);
+	}
+
+	//prints operators
+	friend void operator>> (istream &input, RationalNumber &num);
+	friend ostream& operator<< (ostream &output, RationalNumber &num);
+	//{
+	//	output << num.numerator << "/" << num.denominator;
+	//	return output;// return outstream object
+	//}
 };
+
+//void operator>> (istream &input, RationalNumber &num)
+//{
+//	string str;
+//	getline(input, str);//assign input to string var
+//	num = RationalNumber(str);//call string constructor for "a+bi"
+//}
+
+//clean - output is an output stream in a+bi format
+ostream &operator<< (ostream &output, RationalNumber &num)
+{
+	output << num.numerator << "/" << num.denominator;
+	return output;// return outstream object
+}
+
 
 int main()
 {
-	RationalNumber rationaal(5, 4);
-	RationalNumber ration(1, 6);
-	RationalNumber radd = rationaal + ration;
-	RationalNumber rsub = rationaal - ration;
-	RationalNumber rmult = rationaal * ration;
-	RationalNumber rdiv = rationaal / ration;
-	rationaal.print();
-	ration.print();
-	radd.print();
-	rsub.print();
-	rmult.print();
-	rdiv.print();
+	RationalNumber rational1(5, 4);
+	RationalNumber rational2(1, 6);
+	RationalNumber rational3(1, 6);
+	RationalNumber radd = rational1 + rational2;
+	RationalNumber rsub = rational1 - rational2;
+	RationalNumber rmult = rational1 * rational2;
+	RationalNumber rdiv = rational1 / rational2;
 
+	cout << "First: " << rational1 << endl;
+	cout << "Second: " << rational2 << endl;
+	cout << "Add: " << radd << endl;
+	cout << "Sub: " << rsub << endl;
+	cout << "Mult: " << rmult << endl;
+	cout << "Div: " << rdiv << endl;
+
+	if (rational2 == rational3)
+	{
+		cout << "true" << endl;
+	}
 
 	_getch();
 	return 0;
