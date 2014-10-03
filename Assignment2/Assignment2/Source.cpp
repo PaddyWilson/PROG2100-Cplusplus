@@ -43,6 +43,19 @@ public:
 		}
 	}
 
+	RationalNumber operator- (RationalNumber &rightObj)
+	{
+		if (this->denominator == rightObj.denominator)
+		{
+			return RationalNumber(this->numerator + rightObj.numerator, this->denominator);
+		}
+		else
+		{
+			int tempDenominator1 = this->denominator * rightObj.denominator;
+			return RationalNumber((this->numerator * rightObj.denominator) + (rightObj.numerator * this->denominator), this->denominator * rightObj.denominator);
+		}
+	}
+
 	void print()
 	{
 		cout << numerator << "/" << denominator << endl;
@@ -52,7 +65,7 @@ public:
 
 int main()
 {
-	RationalNumber rationaal(1, 21);
+	RationalNumber rationaal(5, 4);
 	RationalNumber ration(1, 6);
 	RationalNumber r = rationaal + ration;
 	rationaal.print();
