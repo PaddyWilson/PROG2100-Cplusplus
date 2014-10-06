@@ -1,5 +1,7 @@
 #include "RationalNumber.h"
 
+#include <regex>
+
 RationalNumber::RationalNumber() :numerator(0), denominator(1){}//default
 RationalNumber::RationalNumber(int numerator) : numerator(numerator), denominator(1){}//if one number is entered
 RationalNumber::RationalNumber(int numerator, int denominator) : numerator(numerator), denominator(denominator){}//two numbers entered
@@ -111,33 +113,26 @@ bool RationalNumber::operator< (RationalNumber &rightObj)
 //prints operators
 void operator>> (istream &input, RationalNumber &num)
 {
+	int n;
+	int d;
+
 	string str;
 	getline(input, str);//assign input to string var
 
-	char *inputString = new char[str.size() + 1];
-	inputString[str.size()] = 0;
-	memcpy(inputString, str.c_str(), str.size());
+	string word;
+	stringstream stream(str);
 
-	char * pch;
-	pch = strtok(inputString, "/");
+	getline(stream, word, '/');
+	n = stoi(word);
+	getline(stream, word, '/');
+	d = stoi(word);
 
-	int n = atoi(pch);
-	int d;
-	while (pch != NULL)
-	{
-		d = atoi(pch);
-		pch = strtok(NULL, "/");
-	}
-
-	if (d == NULL)
+	if (n == d)
 	{
 		num = RationalNumber(n);
-		return;
 	}
-	else
-	{
+	else{
 		num = RationalNumber(n, d);
-		return;
 	}
 }
 

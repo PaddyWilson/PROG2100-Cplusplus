@@ -66,9 +66,11 @@
   <ItemGroup>
     <ClCompile Include="RationalNumber.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Validdator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RationalNumber.h" />
+    <ClInclude Include="Validator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
