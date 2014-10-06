@@ -21,7 +21,7 @@
     <ClCompile Include="RationalNumber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Validdator.cpp">
+    <ClCompile Include="Validator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

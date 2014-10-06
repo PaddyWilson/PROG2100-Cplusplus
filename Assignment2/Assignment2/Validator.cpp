@@ -9,19 +9,18 @@ bool Validator::inputMechanism(string *inputString)
 		tempKey = _getch();
 		if ((tempKey >= 48 && tempKey <= 57) || tempKey == 47)//ascii range 49 to 50
 		{
-			size_t find = (*inputString).find("/");
-			if (find != string::npos && tempKey == 47)
-			{
-				(*inputString) += tempKey;
-				printf("%c", tempKey);
-				break;
-			}
-
 			//when valid char pressed, accept and print to screen
 			if (maxLineLength > (*inputString).length())
 			{
-				(*inputString) += tempKey;
-				printf("%c", tempKey);
+				if ((*inputString).find("/") != string::npos && tempKey == 47)
+				{
+					
+				}
+				else
+				{
+					(*inputString) += tempKey;
+					printf("%c", tempKey);
+				}
 			}
 
 		}//end if

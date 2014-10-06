@@ -1,6 +1,5 @@
 #include "RationalNumber.h"
-
-#include <regex>
+#include "Validator.h"
 
 RationalNumber::RationalNumber() :numerator(0), denominator(1){}//default
 RationalNumber::RationalNumber(int numerator) : numerator(numerator), denominator(1){}//if one number is entered
@@ -113,25 +112,50 @@ bool RationalNumber::operator< (RationalNumber &rightObj)
 //prints operators
 void operator>> (istream &input, RationalNumber &num)
 {
-	int n;
-	int d;
+	Validator val;
+	int n = 1;
+	int d = 1;
 
 	string str;
-	getline(input, str);//assign input to string var
+
+	while (true)
+	{
+		if (val.inputMechanism(&str))
+			break;
+		else
+			cout << "Enter a Valid Number" << endl;
+	}
 
 	string word;
 	stringstream stream(str);
 
-	getline(stream, word, '/');
-	n = stoi(word);
-	getline(stream, word, '/');
-	d = stoi(word);
+	try
+	{
+		getline(stream, word, '/');
+		n = stoi(word);
+	}
+	catch (...)
+	{
+		//cout << "Error" << endl;
+	}
+	
+	try
+	{
+		getline(stream, word, '/');
+		d = stoi(word);
+	}
+	catch (...)
+	{
+		//cout << "Error" << endl;
+	}
+	
 
 	if (n == d)
 	{
-		num = RationalNumber(n);
+		num = RationalNumber(1);
 	}
-	else{
+	else
+	{
 		num = RationalNumber(n, d);
 	}
 }
