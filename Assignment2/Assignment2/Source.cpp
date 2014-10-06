@@ -124,10 +124,6 @@ public:
 	//prints operators
 	friend void operator>> (istream &input, RationalNumber &num);
 	friend ostream& operator<< (ostream &output, RationalNumber &num);
-	//{
-	//	output << num.numerator << "/" << num.denominator;
-	//	return output;// return outstream object
-	//}
 };
 
 void operator>> (istream &input, RationalNumber &num)
@@ -135,13 +131,31 @@ void operator>> (istream &input, RationalNumber &num)
 	string str;
 	getline(input, str);//assign input to string var
 
+	char *inputString = new char[str.size() + 1];
+	inputString[str.size()] = 0;
+	memcpy(inputString, str.c_str(), str.size());
+	
+	int numT = 0;
+	char * pch;
+	pch = strtok(inputString, "/");
 
+	int n = atoi(pch);
+	int d;
+	while (pch != NULL)
+	{
+		d = atoi(pch);
+		pch = strtok(NULL, "/");
+		numT++;
+	}
 
-
-	//char string[] = str.str();
-
-
-	//num = RationalNumber(str);//call string constructor for "a+bi"
+	if (d == NULL)
+	{
+		num = RationalNumber(n);
+	}
+	else
+	{
+		num = RationalNumber(n, d);
+	}
 }
 
 //clean - output is an output stream in a+bi format
@@ -159,43 +173,26 @@ ostream &operator<< (ostream &output, RationalNumber &num)
 	return output;// return outstream object
 }
 
-//strtok example
-void strtokExample()
-{
-	int numT = 0;
-	char str[] = "1/9";
-	char * pch;
-	printf("Splitting string \"%s\" into tokens:\n\n", str);
-	pch = strtok(str, "/");
-	while (pch != NULL)
-	{
-		printf("%s\n", pch);
-		pch = strtok(NULL, " ,.-");
-		numT++;
-	}
-	cout << "\nTotal tolkens: " << numT << endl;
-	cout << "press any key for next example" << endl;
-	cin.get();
-
-}//end method strtokExample()
-
 int main()
 {
 	string input;
 	int n;
 	int d;
 
+	RationalNumber rational1;
+
 	cout << "number 1" << endl;
-	cout << "numerator" << endl;
-	getline(cin, input);
-	n = atoi(input.c_str());
-	cout << "denom" << endl;
-	getline(cin, input);
-	d = atoi(input.c_str());
+	cin >> rational1;
+//	cout << "numerator" << endl;
+//	getline(cin, input);
+//	n = atoi(input.c_str());
+//	cout << "denom" << endl;ss
+//	getline(cin, input);
+//	d = atoi(input.c_str());
+//
+//RationalNumber rational1();
 
-RationalNumber rational1(n, d);
-
-cout << endl;
+	cout << endl;
 	cout << "number 2" << endl;
 	cout << "numerator" << endl;
 	getline(cin, input);
@@ -231,8 +228,6 @@ cout << endl;
 		cout << "True" << endl;
 	else
 		cout << "False" << endl;
-
-	strtokExample();
 
 	_getch();
 	return 0;
