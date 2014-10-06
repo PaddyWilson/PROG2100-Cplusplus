@@ -7,7 +7,6 @@
 #include <regex>
 
 #include "RationalNumber.h"
-#include "Validator.h"
 
 using namespace std;
 
@@ -16,7 +15,6 @@ int main()
 	RationalNumber rational1;
 	RationalNumber rational2;
 
-	Validator myVal;
 	string input;
 
 	do

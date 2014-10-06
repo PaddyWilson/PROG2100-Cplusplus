@@ -20,7 +20,7 @@ public:
 	RationalNumber(int numerator);
 	RationalNumber(int numerator, int denominator);
 
-	void normalize();
+	RationalNumber normalize();
 
 	//addition
 	RationalNumber operator+ (RationalNumber &rightObj);

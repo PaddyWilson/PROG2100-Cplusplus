@@ -5,74 +5,53 @@ RationalNumber::RationalNumber() :numerator(0), denominator(1){}//default
 RationalNumber::RationalNumber(int numerator) : numerator(numerator), denominator(1){}//if one number is entered
 RationalNumber::RationalNumber(int numerator, int denominator) : numerator(numerator), denominator(denominator){}//two numbers entered
 
-void RationalNumber::normalize()
+RationalNumber RationalNumber::normalize()
 {
-
+	
 }
 
-//addition
+//addition 
+//done
 RationalNumber RationalNumber::operator+ (RationalNumber &rightObj)
 {
+	//if they have the same denominator
 	if (this->denominator == rightObj.denominator)
 	{
-		return RationalNumber(this->numerator + rightObj.numerator, this->denominator);
+		//return normalize(RationalNumber(this->numerator + rightObj.numerator, this->denominator));
+		return (RationalNumber(this->numerator + rightObj.numerator, this->denominator));
 	}
-	else
+	else// dont have same denominator
 	{
-		int i = 1;
-		int tempDenominator1 = this->denominator;
-		int tempDenominator2;
-		while (true)
-		{
-			tempDenominator1 = i * this->denominator;
-			for (int z = 1; z < 15; z++)
-			{
-				tempDenominator2 = z * rightObj.denominator;
-				if (tempDenominator1 == tempDenominator2)
-				{
-					return RationalNumber((this->numerator * i) + (rightObj.numerator * z), tempDenominator1);
-				}
-			}
-			i++;
-		}
+		return RationalNumber((this->numerator * rightObj.denominator)+(rightObj.numerator * this->numerator),
+								this->denominator * rightObj.denominator);
 	}
 }
 
-//subtration
+//subtration 
+//done
 RationalNumber RationalNumber::operator- (RationalNumber &rightObj)
 {
+	//same denominator
 	if (this->denominator == rightObj.denominator)
 	{
 		return RationalNumber(this->numerator + rightObj.numerator, this->denominator);
 	}
-	else
+	else//different denominator
 	{
-		int i = 1;
-		int tempDenominator1 = this->denominator;
-		int tempDenominator2;
-		while (true)
-		{
-			tempDenominator1 = i * this->denominator;
-			for (int z = 1; z < 15; z++)
-			{
-				tempDenominator2 = z * rightObj.denominator;
-				if (tempDenominator1 == tempDenominator2)
-				{
-					return RationalNumber((this->numerator * i) - (rightObj.numerator * z), tempDenominator1);
-				}
-			}
-			i++;
-		}
+		return RationalNumber((this->numerator * rightObj.denominator) - (rightObj.numerator * this->numerator),
+								this->denominator * rightObj.denominator);
 	}
 }
 
 //multiplication
+//done
 RationalNumber RationalNumber::operator* (RationalNumber &rightObj)
 {
 	return RationalNumber(this->numerator * rightObj.numerator, this->denominator * rightObj.denominator);
 }
 
 //divide
+//done
 RationalNumber RationalNumber::operator/ (RationalNumber &rightObj)
 {
 	return RationalNumber(this->numerator * rightObj.denominator, this->denominator * rightObj.numerator);
@@ -122,8 +101,8 @@ void operator>> (istream &input, RationalNumber &num)
 	{
 		if (val.inputMechanism(&str))
 			break;
-		else
-			cout << "Enter a Valid Number" << endl;
+		//else
+			//cout << "Enter a Valid Number" << endl;
 	}
 
 	string word;
