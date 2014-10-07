@@ -37,9 +37,6 @@ RationalNumber RationalNumber::normalize(RationalNumber rational)
 		y = g;
 	}
 
-	//rational.numerator = rational.numerator / g;
-	//rational.denominator = rational.denominator / g;
-
 	return RationalNumber(rational.numerator / g, rational.denominator / g);
 }
 
@@ -54,7 +51,7 @@ RationalNumber RationalNumber::operator+ (RationalNumber &rightObj)
 	}
 	else// dont have same denominator
 	{
-		return normalize(RationalNumber((this->numerator * rightObj.denominator)+(rightObj.numerator * this->numerator),
+		return normalize(RationalNumber((this->numerator * rightObj.denominator)+(rightObj.numerator * this->denominator),
 								this->denominator * rightObj.denominator));
 	}
 }
@@ -69,7 +66,7 @@ RationalNumber RationalNumber::operator- (RationalNumber &rightObj)
 	}
 	else//different denominator
 	{
-		return normalize(RationalNumber((this->numerator * rightObj.denominator) - (rightObj.numerator * this->numerator),
+		return normalize(RationalNumber((this->numerator * rightObj.denominator) - (rightObj.numerator * this->denominator),
 								this->denominator * rightObj.denominator));
 	}
 }

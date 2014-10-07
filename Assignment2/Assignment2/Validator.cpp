@@ -7,7 +7,7 @@ bool Validator::inputMechanism(string *inputString)
 
 	do{
 		tempKey = _getch();
-		if ((tempKey >= 48 && tempKey <= 57) || tempKey == 47)//ascii range 49 to 50
+		if ((tempKey >= 48 && tempKey <= 57) || tempKey == 47 || tempKey == 45)//ascii range 49 to 50
 		{
 			//when valid char pressed, accept and print to screen
 			if (maxLineLength > (*inputString).length())
