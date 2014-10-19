@@ -15,9 +15,9 @@ public:
 	~Student();//destructor
 
 	void getValuesForEverything(string name, string *courseList, int numCourses);
-	void reset();
+	void resetEveryThing();
 	void resetCourses();
-	void displayStudent();
+	string displayStudent();
 
 	friend ostream& operator<<(ostream& output, Student& studentIn);
 	Student operator=(Student& studentIn);

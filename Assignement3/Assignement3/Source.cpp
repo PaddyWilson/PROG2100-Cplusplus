@@ -89,11 +89,3 @@ string getInput()
 	} while (input.length() == 0);//done return if blank string
 	return input;
 }
-
-void display(string *courseList, int max)
-{
-	for (int i = 0; i < max; i++)
-	{
-		cout << "Course entered so far: " << courseList[i] << endl;
-	}
-}

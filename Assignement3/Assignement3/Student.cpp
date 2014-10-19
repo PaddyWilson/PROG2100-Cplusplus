@@ -2,20 +2,26 @@
 #include <conio.h>
 #include <iostream>
 
+#include <Windows.h>//OutputDebugString()
+
 //default constuctor
 Student::Student() :name(""), numCourses(0)
 {
+	cout << "**Default Contructor Fired**" << endl;
 	this->courseList = new string[0];
 }
 
 //copy constructor
 Student::Student(const Student& studentIn)
 {
-	this->name = studentIn.name;
-	this->numCourses = studentIn.numCourses;
+	cout << "**Copy Contructor Fired**" << endl;
 
+	this->name = studentIn.name;//copy name
+	this->numCourses = studentIn.numCourses;//copy numCourses
+
+	//copy array courseList
 	this->courseList = new string[numCourses + 1];
-	for (int i = 0; i < numCourses; i++)
+	for (int i = 0; i < this->numCourses; i++)
 	{
 		this->courseList[i] = studentIn.courseList[i];
 	}
@@ -24,12 +30,15 @@ Student::Student(const Student& studentIn)
 //deconstuctor
 Student::~Student()
 {
+	cout << "**Decontructor Fired**" << endl;
+	//clears the courseList array from RAM
 	if (this->courseList != NULL)
 	{
 		delete[] this->courseList;
 	}
 }
 
+//get the value for all the things
 void Student::getValuesForEverything(string name, string *courseList, int numCourses)
 {
 	this->name = name;
@@ -40,7 +49,6 @@ void Student::getValuesForEverything(string name, string *courseList, int numCou
 	}
 
 	this->courseList = new string[this->numCourses];
-
 	for (int i = 0; i < this->numCourses; i++)
 	{
 		this->courseList[i] = courseList[i];
@@ -48,8 +56,11 @@ void Student::getValuesForEverything(string name, string *courseList, int numCou
 	
 }
 
-//resets the 
-void Student::reset()
+//resets 
+//name to blank string
+//numCourses to 0
+//clears the courseList Array from RAM
+void Student::resetEveryThing()
 {
 	name = "";
 	numCourses = 0;
@@ -60,6 +71,9 @@ void Student::reset()
 	courseList = new string[0];
 }
 
+//resets 
+//numCourses to 0
+//clears the courseList Array from RAM
 void Student::resetCourses()
 {
 	numCourses = 0;
@@ -70,16 +84,18 @@ void Student::resetCourses()
 	courseList = new string[0];
 }
 
-void Student::displayStudent()
+//displayes
+string Student::displayStudent()
 {
-	cout << "Name: " << name << endl
-		<< "Number of Course: " << numCourses << endl
-		<< "Courses" << endl;
+	string output = "Name: " + name + "\n"
+		+ "Number of Course: " + to_string(numCourses) + "\n"
+		+ "Courses" + "\n";
 
 	for (int i = 0; i < numCourses; i++)
 	{
-		cout << courseList[i] << endl;
+		output += courseList[i] + "\n";
 	}
+	return output;
 }
 
 ostream& operator<<(ostream& output, Student& studentIn)
@@ -98,6 +114,7 @@ ostream& operator<<(ostream& output, Student& studentIn)
 
 Student Student::operator=(Student& studentIn)
 {
+	cout << "**operator = Fired**" << endl;
 	this->name = studentIn.name;
 	this->numCourses = studentIn.numCourses;
 
