@@ -9,10 +9,10 @@
 using namespace std;
 
 vector<string> openFile(string filePath);
-void readFile();
-void changeFile(vector<string>& list);
+void changeFile(vector<string>& list, char find, string replace);
 void writeFile(vector<string> list);
 
+//couts a vector<string>
 void coutVector(vector<string> list)
 {
 	for (int i = 0; i < list.size(); i++)
@@ -31,7 +31,8 @@ int main()
 	list = openFile(filePath);
 
 	cout << "Changing file" << endl;
-	changeFile(list);
+	changeFile(list, '<', "&lt;");
+	changeFile(list, '>', "&gt;");
 
 	cout << "writing file" << endl;
 	writeFile(list);
@@ -69,22 +70,18 @@ vector<string> openFile(string filePath)
 	return list;
 }
 
-//changes < to &lt; and > to &gt;
-void changeFile(vector<string>& list)
+//changes a char to some other thing
+void changeFile(vector<string>& list, char find, string replaceString)
 {
 	for (int i = 0; i < list.size(); i++)
 	{
-		//replace < and >
-		for (int j = 0; j < list.at(i).length(); j++)
+		//replace
+		for (int j = list.at(i).length() - 1; j >= 0; j--)
 		{
-			try
+			if (list.at(i).at(j) == find)
 			{
-				list.at(i).replace(list.at(i).find("<"), sizeof("<") - 1, "&lt;");
-				list.at(i).replace(list.at(i).find(">"), sizeof(">") - 1, "&gt;");
-			}
-			catch (exception e)
-			{	
-				OutputDebugString("changeFile Error\n");
+				list.at(i).erase(j, 1);
+				list.at(i).insert(j, replaceString);
 			}
 		}
 	}
