@@ -1,41 +1,58 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <conio.h>
-#include <vector>
-
-#include <Windows.h>
-
-using namespace std;
-
-vector<string> openFile(string filePath);
-void changeFile(vector<string>& list, char find, string replace);
-void writeFile(vector<string> list);
-
-//couts a vector<string>
-void coutVector(vector<string> list)
-{
-	for (int i = 0; i < list.size(); i++)
-	{
-		cout << list.at(i) << endl;
-	}
-}
+#include "Header.h"
 
 int main()
 {
 	// use double back slashes in files paths
-	string filePath = "D:\\Google Drive\\NSCC\\PROG 2100 (C++)\\validation code.cpp";
-	vector<string> list;
+	string filePath;// = "D:\Google Drive\NSCC\PROG 2100\validation code.cpp";
+	string outFileName;
+	vector<string> list;//stores the inputed file for manipulation
 
+	boost::regex regex("([^\s]+(\.(?i)(cpp))$)");
+
+	int t = 0;
+	cout << "Enter a file along with its path" << endl << "ie. C:\\test\\test.cpp" << endl;
+	do
+	{
+		if (t == 1)
+		{
+			cout << "Enter a valid file" << endl;
+		}
+		getline(cin, filePath);//gets the file path
+		removeChar(filePath, '"');//removes the " from the file path
+		t = 1;
+	} while (!boost::filesystem::exists(filePath) && !boost::regex_search(filePath, regex));//needs a .cpp file extention and a file that exists
+	
+	t = 0;
+	cout << "Enter a file name for output" << endl;
+	do
+	{
+		if (t==1)
+		{
+			cout << "Enter a valid file name" << endl;
+		}
+		getline(cin, outFileName);
+		t = 1;
+	} while (outFileName == "");
+	
 	cout << "opening file" << endl;
-	list = openFile(filePath);
+	if (!openFile(list, filePath))
+	{//if fails
+		cout << "Failed to open file" << endl << "Good By" << endl;
+		_getch();
+		return 1;
+	}
 
 	cout << "Changing file" << endl;
 	changeFile(list, '<', "&lt;");
 	changeFile(list, '>', "&gt;");
 
 	cout << "writing file" << endl;
-	writeFile(list);
+	if (!writeFile(list, outFileName))
+	{//if fails
+		cout << "Failed to write file" << endl << "Good By" << endl;
+		_getch();
+		return 2;
+	}
 
 	cout << "Good Bye" << endl;
 	
@@ -43,31 +60,45 @@ int main()
 	return 0;
 }//end main
 
+//removes a char from a string
+void removeChar(string& filePath, char a)
+{
+	for (int j = filePath.length() - 1; j >= 0; j--)
+		if (filePath.at(j) == a)
+			filePath.erase(j, 1);
+}
+
 //opens a file at the path provided
-vector<string> openFile(string filePath)
+bool openFile(vector<string>& list, string filePath)
 {
 	ifstream myfile;
-	vector<string> list;
+	//vector<string> list;
 	string line;
 
 	myfile.open(filePath);
-	if (myfile.is_open())
+	if (myfile.fail())//if the file failed to open
 	{
+		myfile.close();//close file in streams
+		return false;
+	}
+
+	try{
 		while (!myfile.eof())
 		{
-			getline(myfile, line);
-			list.push_back(line);
+			getline(myfile, line);//reads 1 line of file
+			list.push_back(line);//stores line in list vector
 		}
-	}
-	else{
-		myfile.close();
-		exit(1);//quits the program
+	} 
+	catch (exception e){
+		myfile.close();//close file in streams
+		e.what();
+		return false;
 	}
 
 	//close file in streams
 	myfile.close();
 
-	return list;
+	return true;
 }
 
 //changes a char to some other thing
@@ -88,19 +119,33 @@ void changeFile(vector<string>& list, char find, string replaceString)
 }
 
 //writes a vector to a .html file
-void writeFile(vector<string> list)
+bool writeFile(vector<string> list, string name)
 {
 	ofstream outFile;
-	outFile.open("out.html");
+	outFile.open(name + ".html");
 
-	//writes to a file
-	outFile << "<PRE>" << endl;
-	for (int i = 0; i < list.size(); i++)
+	if (outFile.fail())//if the file failed to open
 	{
-		outFile << list.at(i) << endl;
+		outFile.close();//close file in streams
+		return false;
 	}
-	outFile << "</PRE>" << endl;
+
+	try{
+		//writes to a file
+		outFile << "<PRE>" << endl;
+		for (int i = 0; i < list.size(); i++)
+		{
+			outFile << list.at(i) << endl;
+		}
+		outFile << "</PRE>" << endl;
+	}
+	catch (exception e){
+		outFile.close();//close file in streams
+		e.what();
+		return false;
+	}
 
 	outFile.close();
+	return true;
 }
 
