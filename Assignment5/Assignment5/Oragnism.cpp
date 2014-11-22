@@ -1,12 +1,12 @@
 #include "Organism.h"
 #include <string>
 
-Organism::Organism() :visual(" "), moved(false)
+Organism::Organism() :visual(" "), moved(false), round(0)
 {
 	//OutputDebugString("Organism Constructor default\n");
 }
 
-Organism::Organism(World *world, int width, int height) : visual(" "), world(world), width(width), height(height), moved(false)
+Organism::Organism(World *world, int width, int height) : visual(" "), world(world), width(width), height(height), moved(false), round(0)
 {
 	//OutputDebugString("Organism Constructor with args\n");
 }

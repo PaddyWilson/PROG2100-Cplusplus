@@ -18,6 +18,7 @@ protected:
 	int height;
 	bool moved;
 	World *world;
+	int round;
 
 	enum { WEST = 1, NORTH, EAST, SOUTH, NUM_DIRECTIONS };
 

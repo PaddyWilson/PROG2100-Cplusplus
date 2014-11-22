@@ -64,32 +64,21 @@ void World::setOrganism(Organism *organism, int x, int y)
 void World::move()
 {
 	round++;
-	cout << "World move()" << endl;
 	for (int y = 0; y < GRID_HEIGHT; y++)
 	{
 		for (int x = 0; x < GRID_WIDTH; x++)
 		{
-			//cout << "x=" << x << " y=" << y;
 			if (grid[x][y] != NULL)//check has something in it
 			{
-				cout << "x=" << x << " y=" << y << " Species=" << grid[x][y]->getSpecies();
 				if (this->grid[x][y]->isTurn() == true)//check if it already went
 				{
-					cout << ", Can Move";
-					cout << ", " << grid[x][y]->move();//moves
+					int i = grid[x][y]->move();
 					if (grid[x][y]->getMoved() == true)//if it did move
 					{
-						cout << ", Did Move";
 						grid[x][y] = NULL;
 					}
 				}
-				else
-					cout << ", Cant Move";
-				cout << endl;
 			}
-			/*else
-				cout << ", Nothing Here";*/
-			//cout << endl;
 		}
 	}
 
