@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <stdlib.h>
 #include <time.h>
+#include <iomanip>
 
 World::World()
 {
@@ -64,6 +65,10 @@ void World::setOrganism(Organism *organism, int x, int y)
 void World::move()
 {
 	round++;
+	cout << left << setw(10) << "Oragism" <<
+		left << setw(5) << "X" <<
+		left << setw(5) << "Y" <<
+		left << setw(5) << "Round" << endl;
 	for (int y = 0; y < GRID_HEIGHT; y++)
 	{
 		for (int x = 0; x < GRID_WIDTH; x++)
@@ -72,7 +77,7 @@ void World::move()
 			{
 				if (this->grid[x][y]->isTurn() == true)//check if it already went
 				{
-					int i = grid[x][y]->move();
+					grid[x][y]->move();
 					if (grid[x][y]->getMoved() == true)//if it did move
 					{
 						grid[x][y] = NULL;

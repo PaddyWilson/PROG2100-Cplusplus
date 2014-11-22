@@ -11,7 +11,7 @@ public:
 	virtual ~ant();
 
 	int getSpecies();
-	int move();
+	void move();
 };
 
 #endif

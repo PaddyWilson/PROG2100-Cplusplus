@@ -5,13 +5,16 @@
 
 class lion : public Organism
 {
+protected:
+	int lastRoundEaten;
+
 public:
 	lion();
 	lion( World *world, int width, int height );
 	virtual ~lion();
 
 	int getSpecies();
-	int move();
+	void move();
 };
 
 #endif

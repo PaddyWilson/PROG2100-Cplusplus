@@ -20,6 +20,8 @@ protected:
 	World *world;
 	int round;
 
+	int prevX;
+
 	enum { WEST = 1, NORTH, EAST, SOUTH, NUM_DIRECTIONS };
 
 public:
@@ -27,7 +29,7 @@ public:
 	Organism( World *world, int width, int height );
 	virtual ~Organism();
 
-	virtual int move() = 0;
+	virtual void move() = 0;
 	//virtual void spawn() = 0;
 	virtual int getSpecies() = 0;
 	//virtual void getPosition() = 0;
@@ -37,9 +39,11 @@ public:
 	void setPosition( int x, int y );
 	void endTurn();
 	bool isTurn();
-
+	
 	bool getMoved();
 	void setMoved(bool);
+
+	void printInfo();
 
 	friend ostream& operator<<( ostream &output, Organism *organism );
 };
