@@ -10,7 +10,8 @@ public:
 	ant( World *world, int width, int height );
 	virtual ~ant();
 
-	void move();
+	int getSpecies();
+	int move();
 };
 
 #endif

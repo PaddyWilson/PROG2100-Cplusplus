@@ -10,7 +10,8 @@ public:
 	lion( World *world, int width, int height );
 	virtual ~lion();
 
-	void move();
+	int getSpecies();
+	int move();
 };
 
 #endif
