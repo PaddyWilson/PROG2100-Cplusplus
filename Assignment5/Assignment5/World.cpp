@@ -59,7 +59,11 @@ Organism* World::getOrganism(int x, int y)
 void World::setOrganism(Organism *organism, int x, int y)
 {
 	this->grid[x][y] = organism;
-	this->grid[x][y]->setPosition(x, y);
+	if (this->grid[x][y] != NULL)
+	{
+		this->grid[x][y]->setPosition(x, y);
+	}
+	
 }
 
 //moves the organisms on the map
@@ -74,7 +78,7 @@ void World::move()
 				if (this->grid[x][y]->isTurn() == true)//check if it already went
 				{
 					grid[x][y]->move();
-					if (grid[x][y]->getMoved() == true)//if it did move
+					if (grid[x][y] != NULL && grid[x][y]->getMoved() == true)//if it did move
 					{
 						grid[x][y] = NULL;
 					}

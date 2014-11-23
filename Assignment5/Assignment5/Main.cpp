@@ -22,7 +22,7 @@ int main()
 			<< "Ant Lions: " << world.getCountOfObject(2) << endl
 			<< "Round: " << world.getRound() << endl;
 		cout << world;// << endl;
-		std::this_thread::sleep_for(std::chrono::seconds(1));//pauses the program for 1 second
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));//pauses the program for .5 second
 		//cin.get();
 		system("cls");//clears the console - bad for some resone
 		
@@ -35,8 +35,9 @@ int main()
 			SetConsoleTextAttribute(hConsole, 15);
 			run = false;
 			cout << "They All Died" << endl
-				<< "What a shame" << endl ;
-			cout << world << endl << endl;
+				<< "What a shame" << endl
+				<< "After " << world.getRound() << " rounds"<< endl;
+			cout << world << endl;
 			//break;
 		}
 
