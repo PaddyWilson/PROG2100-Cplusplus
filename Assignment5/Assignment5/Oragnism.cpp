@@ -3,58 +3,55 @@
 
 Organism::Organism() :visual(" "), moved(false), round(0)
 {
-	//OutputDebugString("Organism Constructor default\n");
+	
 }
 
 Organism::Organism(World *world, int width, int height) : visual(" "), world(world), width(width), height(height), moved(false), round(0)
 {
-	//OutputDebugString("Organism Constructor with args\n");
+	
 }
 
 Organism::~Organism()
 {
-	/*if (this->world != NULL)
-	{
-		delete this->world;
-	}*/
+	
 }
 
+//move get/set
 bool Organism::getMoved()
 {
 	return moved;
 }
-
 void Organism::setMoved(bool a)
 {
 	this->moved = a;
 }
 
+//is new item set
 void Organism::setIsNew(bool a)
 {
 	this->isNew = a;
 }
 
-//virtual void spawn() = 0;
-//virtual void getSpecies() = 0;
-//virtual void getPosition() = 0;
-
+//visual get
 string Organism::getVisual()
 {
 	return this->visual;
 }
 
-
+//sets the x y of the organism
 void Organism::setPosition(int x, int y)
 {
 	this->x = x;
 	this->y = y;
 }
 
+//end turn method
 void Organism::endTurn()
 {
 	moved = false;
 }
 
+//is it it's turn
 bool Organism::isTurn()
 {
 	if (moved == false)
@@ -68,17 +65,16 @@ ostream& operator<<(ostream &output, Organism *organism)
 {
 	HANDLE  hConsole;
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (organism->getVisual() == "O")
+	if (organism->getSpecies() == 1)//prints Ants as yellow O's
 	{
-		SetConsoleTextAttribute(hConsole, 14);
+		SetConsoleTextAttribute(hConsole, 14);//sets color
 	}
-	else if (organism->getVisual() == "X")
+	else if (organism->getSpecies() == 2)//prints Ant Lions as cyan X's
 	{
-		SetConsoleTextAttribute(hConsole, 11);
+		SetConsoleTextAttribute(hConsole, 11);//sets color
 	}
 	else
 	{
-		//SetConsoleTextAttribute(hConsole, 15);
 		output << " ";
 		return output;
 	}

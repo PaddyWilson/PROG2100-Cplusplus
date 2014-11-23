@@ -15,6 +15,7 @@ public:
 
 	int getSpecies();
 	void move();
+	void breed();
 };
 
 #endif

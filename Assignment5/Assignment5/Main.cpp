@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <thread>         // std::this_thread::sleep_for
 #include <chrono> 
-#include <Windows.h>
+#include <Windows.h>//for console colours
 
 int main()
 {
@@ -22,9 +22,9 @@ int main()
 			<< "Ant Lions: " << world.getCountOfObject(2) << endl
 			<< "Round: " << world.getRound() << endl;
 		cout << world;// << endl;
-		//std::this_thread::sleep_for(std::chrono::seconds(1));//pauses the program for 1 second
-		cin.get();
-		//system("cls");//clears the console - bad for some resone
+		std::this_thread::sleep_for(std::chrono::seconds(1));//pauses the program for 1 second
+		//cin.get();
+		system("cls");//clears the console - bad for some resone
 		
 		//moves things in the world
 		world.move();
@@ -32,13 +32,16 @@ int main()
 		//checks if all of one of the species have died
 		if (world.getCountOfObject(1) == 0 || world.getCountOfObject(2) == 0)
 		{
+			SetConsoleTextAttribute(hConsole, 15);
 			run = false;
 			cout << "They All Died" << endl
-				<< "What a shame" << endl;
+				<< "What a shame" << endl ;
+			cout << world << endl << endl;
 			//break;
 		}
 
 	}
+
 	cin.get();
 	return 1;
 }

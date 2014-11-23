@@ -1,8 +1,6 @@
 #include "World.h"
-#include <Windows.h>
-#include <stdlib.h>
-#include <time.h>
-#include <iomanip>
+#include <stdlib.h>//for rand()
+#include <time.h>//for time()
 
 World::World()
 {
@@ -82,6 +80,12 @@ void World::move()
 					}
 				}
 
+	//breed ant lions
+	for (int y = 0; y < GRID_HEIGHT; y++)
+		for (int x = 0; x < GRID_WIDTH; x++)
+			if (grid[x][y] != NULL && grid[x][y]->getSpecies() == 2)//check has something in it and is a ant lion
+				grid[x][y]->breed();
+
 	//loops through the grid and moves the ant
 	for (int y = 0; y < GRID_HEIGHT; y++)
 		for (int x = 0; x < GRID_WIDTH; x++)
@@ -94,6 +98,12 @@ void World::move()
 						grid[x][y] = NULL;//sets the pointer it was previously at to null so there is mot two of them
 					}
 				}
+
+	//breed ants
+	for (int y = 0; y < GRID_HEIGHT; y++)
+		for (int x = 0; x < GRID_WIDTH; x++)
+			if (grid[x][y] != NULL && grid[x][y]->getSpecies() == 1)//check has something in it and is a ant
+				grid[x][y]->breed();
 
 	//ends the turns for the organisms
 	for (int y = 0; y < GRID_HEIGHT; y++)

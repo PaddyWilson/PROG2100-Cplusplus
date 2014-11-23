@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <stdlib.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -30,8 +32,9 @@ public:
 	virtual ~Organism();
 
 	virtual void move() = 0;
-	//virtual void spawn() = 0;
 	virtual int getSpecies() = 0;
+	virtual void breed() = 0;
+	//virtual void spawn() = 0;
 	//virtual void getPosition() = 0;
 
 	string getVisual();
@@ -43,8 +46,6 @@ public:
 	bool getMoved();
 	void setMoved(bool);
 	void setIsNew(bool);
-
-	void printInfo();
 
 	friend ostream& operator<<( ostream &output, Organism *organism );
 };
