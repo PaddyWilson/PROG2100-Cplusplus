@@ -10,22 +10,13 @@ int main()
 	World world;// = new World;
 
 	HANDLE  hConsole;
-	int k = 10;
-
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	//// you can loop k higher to see more color choices
-	//for (k = 1; k < 255; k++)
-	//{
-	//	// pick the colorattribute k you want
-	//	SetConsoleTextAttribute(hConsole, k);//15 is white text black background
-	//	cout << k << " I want to be nice today!" << endl;
-	//}
 
-	//cin.get(); // wait
+	bool run = true;
 
-	while (true)
+	while (run)
 	{
-		SetConsoleTextAttribute(hConsole, 15);
+		SetConsoleTextAttribute(hConsole, 15);//sets the console text color to white
 		cout << "Number of Organisums: " << world.getCountOfObject(1)+world.getCountOfObject(2) << endl
 			<< "Ants: " << world.getCountOfObject(1) << endl
 			<< "Ant Lions: " << world.getCountOfObject(2) << endl
@@ -35,9 +26,19 @@ int main()
 		cin.get();
 		//system("cls");//clears the console - bad for some resone
 		
-		//moves things
+		//moves things in the world
 		world.move();
+
+		//checks if all of one of the species have died
+		if (world.getCountOfObject(1) == 0 || world.getCountOfObject(2) == 0)
+		{
+			run = false;
+			cout << "They All Died" << endl
+				<< "What a shame" << endl;
+			//break;
+		}
+
 	}
-	_getch();
+	cin.get();
 	return 1;
 }

@@ -29,6 +29,11 @@ void Organism::setMoved(bool a)
 	this->moved = a;
 }
 
+void Organism::setIsNew(bool a)
+{
+	this->isNew = a;
+}
+
 //virtual void spawn() = 0;
 //virtual void getSpecies() = 0;
 //virtual void getPosition() = 0;

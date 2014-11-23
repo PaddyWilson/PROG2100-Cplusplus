@@ -20,7 +20,7 @@ protected:
 	World *world;
 	int round;
 
-	int prevX;
+	bool isNew = false;
 
 	enum { WEST = 1, NORTH, EAST, SOUTH, NUM_DIRECTIONS };
 
@@ -42,6 +42,7 @@ public:
 	
 	bool getMoved();
 	void setMoved(bool);
+	void setIsNew(bool);
 
 	void printInfo();
 
