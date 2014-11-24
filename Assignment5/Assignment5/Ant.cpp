@@ -70,8 +70,8 @@ void ant::move()
 			break;
 		default:
 			break;
-		}
-	}
+		}//end switch
+	}//end if (isNew == true)
 	isNew = true;
 }
 

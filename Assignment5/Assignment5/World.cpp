@@ -60,10 +60,7 @@ void World::setOrganism(Organism *organism, int x, int y)
 {
 	this->grid[x][y] = organism;
 	if (this->grid[x][y] != NULL)
-	{
-		this->grid[x][y]->setPosition(x, y);
-	}
-	
+		this->grid[x][y]->setPosition(x, y);	
 }
 
 //moves the organisms on the map
@@ -77,10 +74,10 @@ void World::move()
 			if (grid[x][y] != NULL && grid[x][y]->getSpecies() == 2)//check has something in it and is a ant lion
 				if (this->grid[x][y]->isTurn() == true)//check if it already went
 				{
-					grid[x][y]->move();
+					grid[x][y]->move();//calls the organisms move function
 					if (grid[x][y] != NULL && grid[x][y]->getMoved() == true)//if it did move
 					{
-						grid[x][y] = NULL;
+						grid[x][y] = NULL;//set the pointer it was at to null so its not duplicated
 					}
 				}
 
@@ -88,7 +85,7 @@ void World::move()
 	for (int y = 0; y < GRID_HEIGHT; y++)
 		for (int x = 0; x < GRID_WIDTH; x++)
 			if (grid[x][y] != NULL && grid[x][y]->getSpecies() == 2)//check has something in it and is a ant lion
-				grid[x][y]->breed();
+				grid[x][y]->breed();//breed
 
 	//loops through the grid and moves the ant
 	for (int y = 0; y < GRID_HEIGHT; y++)
@@ -99,7 +96,7 @@ void World::move()
 					grid[x][y]->move();//calls the organisms move function
 					if (grid[x][y]->getMoved() == true)//if it did move
 					{
-						grid[x][y] = NULL;//sets the pointer it was previously at to null so there is mot two of them
+						grid[x][y] = NULL;//set the pointer it was at to null so its not duplicated
 					}
 				}
 
@@ -107,7 +104,7 @@ void World::move()
 	for (int y = 0; y < GRID_HEIGHT; y++)
 		for (int x = 0; x < GRID_WIDTH; x++)
 			if (grid[x][y] != NULL && grid[x][y]->getSpecies() == 1)//check has something in it and is a ant
-				grid[x][y]->breed();
+				grid[x][y]->breed();//breed
 
 	//ends the turns for the organisms
 	for (int y = 0; y < GRID_HEIGHT; y++)
@@ -117,7 +114,7 @@ void World::move()
 		
 }
 
-//returns the amout of organism specifyed
+//returns the amout of specifyed organisms in the world
 int World::getCountOfObject(int i)
 {
 	int count = 0;
