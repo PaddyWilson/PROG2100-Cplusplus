@@ -17,11 +17,11 @@ public:
 	{
 		cout << "method inputMechansim involked" << endl;
 		char tempKey;
-		const static int maxLineLength = 1;
+		const static int maxLineLength = 10;
 
 		do{
 			tempKey = _getch();
-			if ((tempKey >= 49 && tempKey <= 50))//ascii range 49 to 50
+			if ((tempKey >= 48 && tempKey <= 57) || tempKey == 47)//ascii range 49 to 50
 			{
 				//when valid char pressed, accept and print to screen
 				if (maxLineLength > (*inputString).length())

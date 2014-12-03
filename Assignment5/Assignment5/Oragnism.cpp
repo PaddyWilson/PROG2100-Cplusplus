@@ -61,6 +61,11 @@ bool Organism::isTurn()
 	return false;
 }
 
+bool Organism::getIsDead()
+{
+	return isDead;
+}
+
 ostream& operator<<(ostream &output, Organism *organism)
 {
 	HANDLE  hConsole;

@@ -1,0 +1,83 @@
+<PRE>
+//this validation prevents the user from crashing your program
+//using input such as 'ctrl z'
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;conio.h&gt;
+#include &lt;cstdlib&gt;
+#include &lt;stdlib.h&gt;
+using namespace std;
+
+
+
+int main()
+{
+	string strStuff;
+	Validator myVal;//declare val obj
+
+	//call mechanism to interactively handle keyboard input
+	if (myVal.inputMechanism(&strStuff))
+		cout &lt;&lt; "The input string: " &lt;&lt; strStuff &lt;&lt; " is valid" &lt;&lt; endl;
+	else
+		cout &lt;&lt; "The input string: " &lt;&lt; strStuff &lt;&lt; " is NOT valid!" &lt;&lt; endl;
+	_getch();
+	return 0;
+}//end main
+
+class Validator
+{
+public:
+	bool inputMechanism(string* inputString)
+	{
+		cout &lt;&lt; "method inputMechansim involked" &lt;&lt; endl;
+		char tempKey;
+		const static int maxLineLength = 20;
+
+		do{
+			tempKey = _getch();
+			if ((tempKey &gt;= 32 && tempKey &lt;= 126))//ascii range 32 to 126
+			{
+				//when valid char pressed, accept and print to screen
+				if (maxLineLength &gt; (*inputString).length())
+				{
+					(*inputString) += tempKey;
+					printf("%c", tempKey);
+				}
+			}//end if
+				else if (tempKey == 8)//ascii backspace
+				{
+					//if back pressed, pop char off string, and erase from screen
+					if ((*inputString).length() &gt; 0)
+					{
+						(*inputString).erase((*inputString).length() - 1, 1);
+						printf("\b \b");
+					}
+				} //end else if
+				else if (tempKey == -32)//drop off any arrow key pressed
+				{
+					_getch();
+				}// end else if
+
+			}while (tempKey != 13);
+
+			printf("\n");
+			return true;
+	}//end method inputMechanism
+};//end class
+
+//int main()
+//{
+//	string strStuff;
+//	Validator myVal;//declare val obj
+//
+//	//call mechanism to interactively handle keyboard input
+//	if (myVal.inputMechanism(&strStuff))
+//		cout &lt;&lt; "The input string: " &lt;&lt; strStuff &lt;&lt; " is valid" &lt;&lt; endl;
+//	else
+//		cout &lt;&lt; "The input string: " &lt;&lt; strStuff &lt;&lt; " is NOT valid!" &lt;&lt; endl;
+//	_getch();
+//	return 0;
+//}//end main
+
+</PRE>

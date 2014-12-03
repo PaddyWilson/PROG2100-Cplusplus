@@ -21,7 +21,7 @@ protected:
 	bool moved;
 	World *world;
 	int round;
-
+	bool isDead = false;
 	bool isNew = false;
 
 	enum { WEST = 1, NORTH, EAST, SOUTH, NUM_DIRECTIONS };
@@ -44,6 +44,7 @@ public:
 	bool isTurn();
 	
 	bool getMoved();
+	bool getIsDead();
 	void setMoved(bool);
 	void setIsNew(bool);
 

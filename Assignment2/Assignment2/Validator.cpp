@@ -12,7 +12,7 @@ bool Validator::inputMechanism(string *inputString)
 			//when valid char pressed, accept and print to screen
 			if (maxLineLength > (*inputString).length())
 			{
-				if ((*inputString).find("/") != string::npos && tempKey == 47)
+				if ((*inputString).find(" ") != string::npos && tempKey == 47)
 				{
 					
 				}

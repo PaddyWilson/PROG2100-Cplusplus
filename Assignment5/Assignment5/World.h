@@ -33,6 +33,8 @@ public:
 	void move();
 	void moveOrganisum(int x, int y);
 
+	void deleteOrganism(int x, int y);
+
 	int getCountOfObject(int i);
 	int getRound();
 

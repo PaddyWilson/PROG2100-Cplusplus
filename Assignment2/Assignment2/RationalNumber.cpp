@@ -1,10 +1,13 @@
 #include "RationalNumber.h"
 #include "Validator.h"
 
+#include <regex>
+
 RationalNumber::RationalNumber() :numerator(0), denominator(1){}//default
 RationalNumber::RationalNumber(int numerator) : numerator(numerator), denominator(1){}//if one number is entered
 RationalNumber::RationalNumber(int numerator, int denominator) : numerator(numerator), denominator(denominator){}//two numbers entered
 
+//take a value like 2/4 and makes it 1/2
 RationalNumber RationalNumber::normalize(RationalNumber rational)
 {
 	if (rational.denominator < 0)
@@ -26,10 +29,10 @@ RationalNumber RationalNumber::normalize(RationalNumber rational)
 	}
 	if ((x + y) == 0)
 	{
-		return 0; /* Error, both parameters zero */
+		return 0; 
 	}
 	int g = y;
-	/* Iterate until x = 0 */
+
 	while (x > 0)
 	{
 		g = x;
@@ -46,7 +49,6 @@ RationalNumber RationalNumber::operator+ (RationalNumber &rightObj)
 	//if they have the same denominator
 	if (this->denominator == rightObj.denominator)
 	{
-		//return normalize(RationalNumber(this->numerator + rightObj.numerator, this->denominator));
 		return normalize(RationalNumber(this->numerator + rightObj.numerator, this->denominator));
 	}
 	else// dont have same denominator
@@ -114,11 +116,16 @@ bool RationalNumber::operator< (RationalNumber &rightObj)
 	return false;
 }
 
-//prints operators
+//gets input
 void operator>> (istream &input, RationalNumber &num)
 {
+	/*regex reg("-?[0-9]*\\/-?[0-9]*");
+	string input;
+
+	getline(cin, input);*/
+
 	Validator val;
-	int n = 1;
+	int n = 0;
 	int d = 1;
 
 	string str;
@@ -154,9 +161,13 @@ void operator>> (istream &input, RationalNumber &num)
 		//cout << "Error" << endl;
 	}
 	
-	if (n == d)
+	if (n == 0 && d == 1)
 	{
-		num = num.normalize(RationalNumber(1));
+		num = num.normalize(RationalNumber());
+	}
+	else if (n == d)
+	{
+		num = num.normalize(RationalNumber(n));
 	}
 	else
 	{
@@ -164,6 +175,7 @@ void operator>> (istream &input, RationalNumber &num)
 	}
 }
 
+//prints to screen
 ostream& operator<< (ostream &output, RationalNumber &num)
 {
 	if (num.denominator == 1)

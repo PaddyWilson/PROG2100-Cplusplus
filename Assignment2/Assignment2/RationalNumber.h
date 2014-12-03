@@ -43,8 +43,9 @@ public:
 	//less than 
 	bool operator< (RationalNumber &rightObj);
 
-	//prints operators
+	//gets input
 	friend void operator>> (istream &input, RationalNumber &num);
+	//prints operators
 	friend ostream& operator<< (ostream &output, RationalNumber &num);
 };
 

@@ -45,7 +45,15 @@ World::World()
 //deconstructor
 World::~World()
 {
+	//makes all the elements null first
+	for (int y = 0; y < GRID_HEIGHT; y++)
+		for (int x = 0; x < GRID_WIDTH; x++)
+			delete grid[x][y];
 
+	if (grid != NULL)
+	{
+		delete[] grid;
+	}
 }
 
 //gets the organism at x, y
@@ -79,6 +87,10 @@ void World::move()
 					{
 						grid[x][y] = NULL;//set the pointer it was at to null so its not duplicated
 					}
+					/*else if (grid[x][y] != NULL && grid[x][y]->getIsDead == true)
+					{
+						delete grid[x][y];
+					}*/
 				}
 
 	//breed ant lions
@@ -112,6 +124,11 @@ void World::move()
 			if (grid[x][y] != NULL)
 				grid[x][y]->endTurn();
 		
+}
+
+void World::deleteOrganism(int x, int y)
+{
+	delete grid[x][y];
 }
 
 //returns the amout of specifyed organisms in the world

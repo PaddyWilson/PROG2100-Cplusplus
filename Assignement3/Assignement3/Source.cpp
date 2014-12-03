@@ -11,11 +11,11 @@ void display(string *courseList, int max);
 
 int main()
 {
+	string input = "y";
 	//never said it had to end
-	while (true)
+	while (input == "y")
 	{
 		Student student1;
-		string input;
 		string name;
 
 		//get name for student1
@@ -75,7 +75,6 @@ int main()
 		cout << "****************************************************" << endl;
 		cout << endl;
 	}//repeat forever
-	_getch();
 }
 
 //gets input

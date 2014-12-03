@@ -31,7 +31,8 @@ int computerAI::AIpick(string p[][3], string x_o)
 		for (int c = 0; c < 3; c++)
 		{
 			i++;
-			if (p[r][c] == to_string(i))
+			char buffer[33];
+			if (p[r][c] == itoa(i, buffer, 10))
 			{
 				count++;
 			}

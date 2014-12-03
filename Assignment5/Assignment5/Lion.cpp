@@ -35,8 +35,8 @@ void lion::move()
 		bool ate = false;
 		round++;
 		
-		vector<int> possibleX;
-		vector<int> possibleY;
+		int posX[8];
+		int posY[8];
 		int i = 0;
 		//eats
 		//searchs for possible locations
@@ -51,8 +51,8 @@ void lion::move()
 				//Now do what ever checks you need to do on cell[x, y] here.
 				else if (this->world->getOrganism(xPos, yPos)->getSpecies() == 1)
 				{
-					possibleX.push_back(xPos);
-					possibleY.push_back(yPos);
+					posX[i] = xPos;
+					posY[i] = yPos;
 					i++;
 				}
 			}
@@ -62,7 +62,8 @@ void lion::move()
 		if (i != 0)
 		{
 			int random = rand() % i + 1;
-			this->world->setOrganism(this, possibleX.at(i - 1), possibleY.at(i - 1));
+			this->world->deleteOrganism(posX[random - 1], posY[random - 1]);
+			this->world->setOrganism(this, posX[random - 1], posY[random - 1]);
 			lastRoundEaten = world->getRound();
 			moved = true;
 			ate = true;
@@ -111,8 +112,10 @@ void lion::move()
 
 	//if the ant lion has not eatin for 3 round it dies
 	if (lastRoundEaten <= (world->getRound() - 3) && isNew == true)
+	{
+		//this->world->deleteOrganism(x, y);
 		this->world->setOrganism(NULL, x, y);
-
+	}
 	isNew = true;
 }
 

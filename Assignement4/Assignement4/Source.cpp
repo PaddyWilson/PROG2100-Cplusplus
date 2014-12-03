@@ -9,6 +9,7 @@ int main()
 
 	boost::regex regex("([^\s]+(\.(?i)(cpp))$)");
 
+	//get 
 	int t = 0;
 	cout << "Enter a file along with its path" << endl << "ie. C:\\test\\test.cpp" << endl;
 	do
@@ -20,9 +21,10 @@ int main()
 		getline(cin, filePath);//gets the file path
 		removeChar(filePath, '"');//removes the " from the file path
 		t = 1;
-	} while (!boost::filesystem::exists(filePath) && !boost::regex_search(filePath, regex));//needs a .cpp file extention and a file that exists
+	} while (!boost::filesystem::exists(filePath) && !boost::regex_search(filePath, regex) );//needs a .cpp file extention and a file that exists
 	
 	t = 0;
+	//gets file outout name
 	cout << "Enter a file name for output" << endl;
 	do
 	{
@@ -31,9 +33,14 @@ int main()
 			cout << "Enter a valid file name" << endl;
 		}
 		getline(cin, outFileName);
-		t = 1;
-	} while (outFileName == "");
-	
+		//validation for file names
+		if (outFileName == "")
+			t = 1;
+		else
+			t = 0;
+	} while (t == 1);
+
+	//opens the file and stores it in a vector
 	cout << "opening file" << endl;
 	if (!openFile(list, filePath))
 	{//if fails
@@ -42,10 +49,12 @@ int main()
 		return 1;
 	}
 
+	//changes < to &lt; and > to &gt;
 	cout << "Changing file" << endl;
 	changeFile(list, '<', "&lt;");
 	changeFile(list, '>', "&gt;");
 
+	//writes the vector to a file
 	cout << "writing file" << endl;
 	if (!writeFile(list, outFileName))
 	{//if fails
@@ -118,7 +127,7 @@ void changeFile(vector<string>& list, char find, string replaceString)
 	}
 }
 
-//writes a vector to a .html file
+//writes a vector to a .html file with <PRE> at start and </PRE> at end
 bool writeFile(vector<string> list, string name)
 {
 	ofstream outFile;
